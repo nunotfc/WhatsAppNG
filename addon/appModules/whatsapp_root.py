@@ -743,7 +743,7 @@ class AppModule(appModuleHandler.AppModule):
 					# Try to focus
 					obj.setFocus()
 					success = True
-					break
+					# NO BREAK - let loop continue naturally
 
 				except Exception:
 					continue
