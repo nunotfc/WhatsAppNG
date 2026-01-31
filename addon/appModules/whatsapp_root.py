@@ -419,7 +419,7 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			# Only works in message list
 			if not self._isMessageListFocus():
-				ui.message(_("Not in message list"))
+				gesture.send()
 				return
 
 			focus = api.getFocusObject()

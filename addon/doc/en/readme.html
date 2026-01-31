@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>WhatsApp Desktop accessibility enhancements 1.0.0</title>
+<title>WhatsApp Desktop accessibility enhancements 1.1.1</title>
 </head>
 <body>
 <h1>WhatsApp NG</h1>
@@ -16,6 +16,8 @@
 <li><strong>Alt+D</strong>: Focus message input field</li>
 <li><strong>Enter</strong>: Play voice message (works in individual chats and groups)</li>
 <li><strong>Shift+Enter</strong>: Open message context menu</li>
+<li><strong>Control+C</strong>: Copy current message to clipboard</li>
+<li><strong>Control+R</strong>: Read complete message (clicks "read more" button if needed)</li>
 </ul>
 <h3>Toggle Scripts (no default shortcut - configure in Input Gestures)</h3>
 <ul>
@@ -40,6 +42,34 @@
 - In message list: Configure a shortcut in Input Gestures</p>
 <p>Configure shortcuts in:
 <strong>NVDA menu → Preferences → Input Gestures → WhatsApp NG</strong></p>
+<h2>Changelog</h2>
+<h3>Version 1.1.1 (2025-01-31)</h3>
+<p><strong>Added:</strong>
+- Control+R: Read complete message (clicks "read more" button automatically)
+- Control+C: Copy current message to clipboard
+- Browse mode auto-disable (keeps focus mode active for better WhatsApp experience)</p>
+<p><strong>Changed:</strong>
+- Improved error messages: All scripts now provide clear feedback on failure
+- Navigation commands (Alt+1, Alt+2, Alt+D) now silent on success
+- Enter: Slider-based detection instead of button counting (more reliable)</p>
+<p><strong>Fixed:</strong>
+- Alt+1 and Alt+2 correctly report errors when all paths fail
+- Optimized object filtering to reduce input lag</p>
+<h3>Version 1.1.0 (2025-01-30)</h3>
+<p><strong>Added:</strong>
+- Control+R: Read complete message
+- Smart voice message playback using slider detection</p>
+<p><strong>Changed:</strong>
+- Enter: Improved logic using slider detection instead of counting buttons</p>
+<p><strong>Fixed:</strong>
+- Alt+2 now correctly tries all navigation paths if first attempt fails</p>
+<h3>Version 1.0.0 (2025-01-29)</h3>
+<p><strong>Initial release:</strong>
+- Navigation shortcuts for conversation list, message list, and message composer
+- Voice message playback with support for individual chats and groups
+- Context menu access for message actions
+- Phone number filtering toggle for conversations and messages
+- Automatic focus mode activation in WhatsApp Desktop</p>
 <h2>Credits</h2>
 <p>Developed by Nuno Costa to provide accessibility enhancements for the modern WhatsApp Desktop experience.</p>
 <h2>Support</h2>

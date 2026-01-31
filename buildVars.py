@@ -29,7 +29,7 @@ Features:
 - Context menu access (Shift+Enter)
 - Toggle phone number filtering in conversations and messages"""),
 	# version
-	addon_version="1.0.0",
+	addon_version="1.1.1",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
 	addon_changelog=_("""Initial release.
