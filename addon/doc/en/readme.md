@@ -9,6 +9,8 @@ NVDA add-on that provides accessibility enhancements for the web-based WhatsApp 
 - **Alt+D**: Focus message input field
 - **Enter**: Play voice message (works in individual chats and groups)
 - **Shift+Enter**: Open message context menu
+- **Control+C**: Copy current message to clipboard
+- **Control+R**: Read complete message (clicks "read more" button if needed)
 
 ### Toggle Scripts (no default shortcut - configure in Input Gestures)
 
@@ -35,6 +37,45 @@ Phone number filters can be toggled:
 
 Configure shortcuts in:
 **NVDA menu → Preferences → Input Gestures → WhatsApp NG**
+
+## Changelog
+
+### Version 1.1.1 (2025-01-31)
+
+**Added:**
+- Control+R: Read complete message (clicks "read more" button automatically)
+- Control+C: Copy current message to clipboard
+- Browse mode auto-disable (keeps focus mode active for better WhatsApp experience)
+
+**Changed:**
+- Improved error messages: All scripts now provide clear feedback on failure
+- Navigation commands (Alt+1, Alt+2, Alt+D) now silent on success
+- Enter: Slider-based detection instead of button counting (more reliable)
+
+**Fixed:**
+- Alt+1 and Alt+2 correctly report errors when all paths fail
+- Optimized object filtering to reduce input lag
+
+### Version 1.1.0 (2025-01-30)
+
+**Added:**
+- Control+R: Read complete message
+- Smart voice message playback using slider detection
+
+**Changed:**
+- Enter: Improved logic using slider detection instead of counting buttons
+
+**Fixed:**
+- Alt+2 now correctly tries all navigation paths if first attempt fails
+
+### Version 1.0.0 (2025-01-29)
+
+**Initial release:**
+- Navigation shortcuts for conversation list, message list, and message composer
+- Voice message playback with support for individual chats and groups
+- Context menu access for message actions
+- Phone number filtering toggle for conversations and messages
+- Automatic focus mode activation in WhatsApp Desktop
 
 ## Credits
 

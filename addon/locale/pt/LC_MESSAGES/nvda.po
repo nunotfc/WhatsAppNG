@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: whatsAppNG 1.0.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-29 18:00-0300\n"
-"PO-Revision-Date: 2025-01-29 18:00-0300\n"
+"Project-Id-Version: whatsAppNG 1.1.1\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2026-01-31 09:50+0000\n"
+"PO-Revision-Date: 2025-01-31 10:00-0300\n"
 "Last-Translator: Nuno Costa <nrfcosta21@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt\n"
@@ -18,11 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. Translators: Summary/title for this add-on
+#. Add-on summary/title, usually the user visible name of the add-on
+#. Translators: Summary/title for this add-on
+#. to be shown on installation and add-on information found in add-on store
 #: buildVars.py:21
 msgid "WhatsApp Desktop accessibility enhancements"
 msgstr "Melhorias de acessibilidade para o WhatsApp Desktop"
 
 #. Translators: Long description to be shown for this add-on
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-on store
 #: buildVars.py:24
 msgid ""
 "Provides accessibility improvements for the web-based WhatsApp Desktop, "
@@ -46,6 +51,8 @@ msgstr ""
 "- Alternar filtragem de números de telefone em conversas e mensagens"
 
 #. Translators: Changelog for this version
+#. Brief changelog for this version
+#. Translators: what's new content for the add-on version to be shown in the add-on store
 #: buildVars.py:35
 msgid ""
 "Initial release.\n"
@@ -66,93 +73,115 @@ msgstr ""
 "mensagens.\n"
 "- Ativação automática do modo de foco no WhatsApp Desktop."
 
-#: addon/appModules/whatsapp_root.py:34
+#: addon/appModules/whatsapp_root.py:41
 msgid "WhatsApp NG"
 msgstr "WhatsApp NG"
 
-msgid "Go to WhatsApp conversation list"
-msgstr "Ir para lista de conversas do WhatsApp"
+#: addon/appModules/whatsapp_root.py:94
+msgid "Copy current message to clipboard"
+msgstr "Copiar mensagem atual para a área de transferência"
 
-msgid "Go to WhatsApp message list"
-msgstr "Ir para lista de mensagens do WhatsApp"
+#: addon/appModules/whatsapp_root.py:135 addon/appModules/whatsapp_root.py:163
+#: addon/appModules/whatsapp_root.py:175
+msgid "Copied"
+msgstr "Copiado"
 
+#. Not a message or couldn't copy
+#: addon/appModules/whatsapp_root.py:179
+msgid "Cannot copy"
+msgstr "Não é possível copiar"
+
+#: addon/appModules/whatsapp_root.py:183
 msgid "Play voice message"
 msgstr "Reproduzir mensagem de voz"
 
+#. No slider or button found
+#: addon/appModules/whatsapp_root.py:197 addon/appModules/whatsapp_root.py:259
+#: addon/appModules/whatsapp_root.py:262
+msgid "No audio message found"
+msgstr "Nenhuma mensagem de voz encontrada"
+
+#. Translators: Read complete message (click "read more" and speak text)
+#: addon/appModules/whatsapp_root.py:266
+msgid "Read complete message (clicks 'read more' button)"
+msgstr "Ler mensagem completa (clica no botão 'ler mais')"
+
+#: addon/appModules/whatsapp_root.py:274 addon/appModules/whatsapp_root.py:418
+msgid "Not in message list"
+msgstr "Não está na lista de mensagens"
+
+#: addon/appModules/whatsapp_root.py:280
+msgid "No message found"
+msgstr "Nenhuma mensagem encontrada"
+
+#: addon/appModules/whatsapp_root.py:401
+msgid "Text not found"
+msgstr "Texto não encontrado"
+
+#: addon/appModules/whatsapp_root.py:410
 msgid "Open context menu"
 msgstr "Abrir menu de contexto"
 
+#: addon/appModules/whatsapp_root.py:424 addon/appModules/whatsapp_root.py:454
+#: addon/appModules/whatsapp_root.py:457
+msgid "No menu found"
+msgstr "Menu não encontrado"
+
+#: addon/appModules/whatsapp_root.py:460
 msgid "Focus message composer"
 msgstr "Focar campo de mensagem"
 
-msgid "Toggle phone number filtering in conversation list"
-msgstr "Alternar filtro de números na lista de conversas"
-
-msgid "Toggle phone number filtering in message list"
-msgstr "Alternar filtro de números na lista de mensagens"
-
-msgid "Conversation list not found"
-msgstr "Lista de conversas não encontrada"
-
-msgid "Message list not found"
-msgstr "Lista de mensagens não encontrada"
-
+#: addon/appModules/whatsapp_root.py:472 addon/appModules/whatsapp_root.py:507
+#: addon/appModules/whatsapp_root.py:509
 msgid "Message composer not found"
 msgstr "Campo de mensagem não encontrado"
 
+#: addon/appModules/whatsapp_root.py:603
+msgid "Go to WhatsApp conversation list"
+msgstr "Ir para lista de conversas do WhatsApp"
+
+#: addon/appModules/whatsapp_root.py:617 addon/appModules/whatsapp_root.py:671
+#: addon/appModules/whatsapp_root.py:674
+msgid "Conversation list not found"
+msgstr "Lista de conversas não encontrada"
+
+#: addon/appModules/whatsapp_root.py:687
+msgid "Go to WhatsApp message list"
+msgstr "Ir para lista de mensagens do WhatsApp"
+
+#: addon/appModules/whatsapp_root.py:700 addon/appModules/whatsapp_root.py:742
+#: addon/appModules/whatsapp_root.py:745
+msgid "Message list not found"
+msgstr "Lista de mensagens não encontrada"
+
+#: addon/appModules/whatsapp_root.py:758
+msgid "Toggle phone number filtering in conversation list"
+msgstr "Alternar filtro de números na lista de conversas"
+
+#: addon/appModules/whatsapp_root.py:764
 msgid "Use this command in the conversation list"
 msgstr "Use este comando na lista de conversas"
 
-msgid "Use this command in the message list"
-msgstr "Use este comando na lista de mensagens"
-
+#: addon/appModules/whatsapp_root.py:773
 msgid "Conversation list: phone numbers hidden"
 msgstr "Lista de conversas: números ocultos"
 
+#: addon/appModules/whatsapp_root.py:775
 msgid "Conversation list: phone numbers visible"
 msgstr "Lista de conversas: números visíveis"
 
+#: addon/appModules/whatsapp_root.py:780
+msgid "Toggle phone number filtering in message list"
+msgstr "Alternar filtro de números na lista de mensagens"
+
+#: addon/appModules/whatsapp_root.py:786
+msgid "Use this command in the message list"
+msgstr "Use este comando na lista de mensagens"
+
+#: addon/appModules/whatsapp_root.py:795
 msgid "Message list: phone numbers hidden"
 msgstr "Lista de mensagens: números ocultos"
 
+#: addon/appModules/whatsapp_root.py:797
 msgid "Message list: phone numbers visible"
 msgstr "Lista de mensagens: números visíveis"
-
-msgid "Conversation list: {status}, Message list: {status2}"
-msgstr "Lista de conversas: {status}, Lista de mensagens: {status2}"
-
-msgid "enabled"
-msgstr "ativado"
-
-msgid "disabled"
-msgstr "desativado"
-
-msgid "Error: {error}"
-msgstr "Erro: {error}"
-
-msgid "No parent"
-msgstr "Sem pai"
-
-msgid "No tree interceptor"
-msgstr "Sem interceptor de árvore"
-
-msgid "{n} siblings"
-msgstr "{n} irmãos"
-
-msgid "Sibling {n}: {count} buttons"
-msgstr "Irmão {n}: {count} botões"
-
-msgid "  Button {n}: {name} {state}"
-msgstr "  Botão {n}: {name} {state}"
-
-msgid "Role {role}, [{path}], {focusable}, {name}"
-msgstr "Função {role}, [{path}], {focusable}, {name}"
-
-msgid "Config: Conversations={val}, Messages={val2}"
-msgstr "Config: Conversas={val}, Mensagens={val2}"
-
-msgid "focusable"
-msgstr "focável"
-
-msgid "not focusable"
-msgstr "não focável"

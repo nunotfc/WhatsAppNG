@@ -57,12 +57,16 @@ class AppModule(appModuleHandler.AppModule):
 		"""
 		Auto-disable browse mode to keep Focus Mode active.
 		If browse mode gets activated (e.g. by Escape), immediately disable it.
+		Only affects WhatsApp, not other applications.
 		"""
 		try:
 			focus = api.getFocusObject()
 			if focus and focus.treeInterceptor:
-				# Force passThrough = True (Focus Mode)
-				focus.treeInterceptor.passThrough = True
+				# Only process WhatsApp objects (check by appModule)
+				app = getattr(focus, "appModule", None)
+				if app and hasattr(app, "appName") and app.appName == "whatsapp.root":
+					# Force passThrough = True (Focus Mode)
+					focus.treeInterceptor.passThrough = True
 		except:
 			pass
 
@@ -520,9 +524,15 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_gainFocus(self, obj, nextHandler):
 		"""Handle focus gain events in WhatsApp."""
-		# Force Focus Mode when entering WhatsApp
-		if obj.treeInterceptor:
-			obj.treeInterceptor.passThrough = True
+		# Only process WhatsApp objects (check by appModule)
+		try:
+			app = getattr(obj, "appModule", None)
+			if app and hasattr(app, "appName") and app.appName == "whatsapp.root":
+				# Force Focus Mode when entering WhatsApp
+				if obj.treeInterceptor:
+					obj.treeInterceptor.passThrough = True
+		except Exception:
+			pass
 		nextHandler()
 
 	def event_NVDAObject_init(self, obj):

@@ -44,6 +44,7 @@ libgettextlib.dll
 libgettextsrc.dll
 libiconv2.dll
 libintl3.dll
-
+xgettext.exe
+libexpat.dll
 # Claude AI
 .claude/
