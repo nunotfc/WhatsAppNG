@@ -31,6 +31,9 @@ MAYBE_RE = re.compile(r"\bTalvez\b\s*", re.IGNORECASE)
 # WhatsAppPlus regex: minimum 12 chars, lookahead to avoid matching time
 PHONE_RE = re.compile(r"\+\d[()\d\s-]{8,15}(?=[^\d]|$|\s)")
 
+# Video duration pattern: detect "3:41", "0:45", etc.
+DURATION_RE = re.compile(r"\b\d+:\d{2}\b")  # Time pattern like "3:41"
+
 class AppModule(appModuleHandler.AppModule):
 	"""
 	App Module for WhatsApp Desktop.
@@ -365,6 +368,13 @@ class AppModule(appModuleHandler.AppModule):
 				ui.message(_("No audio message found"))
 				return
 
+			# Check if this is a video by looking for duration pattern in message
+			if self._isVideoMessage(parent):
+				# Video: click first button directly
+				self._clickFirstButton(focus)
+				return
+
+			# Audio: search for slider and click button before it
 			# Search for slider in siblings
 			siblings = getattr(parent, "children", []) or []
 			for sibling in siblings:
@@ -801,6 +811,63 @@ class AppModule(appModuleHandler.AppModule):
 
 		# And does NOT have TABLE as ancestor
 		return not self._hasAncestorWithRole(focus, ["TABLE"], limit=40)
+
+	def _isVideoMessage(self, parent):
+		"""Check if message is a video by checking first button name for duration pattern."""
+		try:
+			# Recursive search for buttons (same logic as Shift+Enter)
+			def find_buttons(obj):
+				"""Find all buttons recursively (no depth limit)."""
+				buttons = []
+				if _role(obj) == controlTypes.Role.BUTTON:
+					buttons.append(obj)
+				for child in getattr(obj, "children", []):
+					buttons.extend(find_buttons(child))
+				return buttons
+
+			# Get all children of parent and search for buttons
+			children = getattr(parent, "children", []) or []
+			all_buttons = []
+			for child in children:
+				all_buttons.extend(find_buttons(child))
+
+			if not all_buttons:
+				return False
+
+			# Check first button name for duration pattern
+			first_button = all_buttons[0]
+			name = getattr(first_button, "name", "") or ""
+			return bool(DURATION_RE.search(name))
+
+		except Exception:
+			return False
+
+	def _clickFirstButton(self, focus):
+		"""Click first button in message (for video playback)."""
+		try:
+			parent = getattr(focus, "parent", None)
+			if not parent:
+				return
+
+			# Recursive search for first button (same logic as Shift+Enter)
+			def find_first_button(obj):
+				"""Find first button recursively."""
+				if _role(obj) == controlTypes.Role.BUTTON:
+					return obj
+				for child in getattr(obj, "children", []):
+					result = find_first_button(child)
+					if result:
+						return result
+				return None
+
+			# Search in all children
+			for child in getattr(parent, "children", []):
+				button = find_first_button(child)
+				if button:
+					button.doAction()
+					return
+		except Exception:
+			pass
 
 	@scriptHandler.script(
 		description=_("Go to WhatsApp conversation list"),
