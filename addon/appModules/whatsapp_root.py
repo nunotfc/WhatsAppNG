@@ -61,7 +61,7 @@ class AppModule(appModuleHandler.AppModule):
 
 		# Register handler to auto-reactivate browse mode if deactivated
 		treeInterceptorHandler.post_browseModeStateChange.register(self._onBrowseModeStateChange)
-		
+
 		# Lazy cache: initialized on first shortcut use
 
 	def _onBrowseModeStateChange(self, **kwargs):
@@ -1099,6 +1099,13 @@ class AppModule(appModuleHandler.AppModule):
 				ui.message(_("Message list: phone numbers visible"))
 		except Exception:
 			pass
+
+	@scriptHandler.script(
+		gesture="kb:escape"
+	)
+	def script_escape(self, gesture):
+		"""Escape: Pass through to application (no description = not in gestures dialog)."""
+		gesture.send()
 
 def _role(obj):
 	try:
