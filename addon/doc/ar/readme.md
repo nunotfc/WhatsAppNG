@@ -110,7 +110,7 @@
 ## الدعم
 
 للمشكلات أو الاقتراحات، يرجى زيارة:
-https://github.com/nunotfc/whatsAppNG/issues
+https://github.com/nunotfc/WhatsAppNG/issues
 
 ## تجميع الترجمة
 

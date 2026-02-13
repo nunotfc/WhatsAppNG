@@ -46,7 +46,7 @@ Developed by Nuno Costa to provide accessibility enhancements for the modern Wha
 ## Support
 
 For issues or suggestions, please visit:
-https://github.com/nrfcosta21/whatsAppNG/issues
+https://github.com/nunotfc/WhatsAppNG/issues
 
 ## Translation Compilation
 
