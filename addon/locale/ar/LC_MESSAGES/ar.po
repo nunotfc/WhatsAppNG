@@ -1,0 +1,181 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the whatsAppNG package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: whatsAppNG 1.3.0\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2026-02-11 22:47+0000\n"
+"PO-Revision-Date: 2026-02-13 15:07+0200\n"
+"Last-Translator: \n"
+"Language-Team: tecwindow.net\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: addon/appModules/whatsapp_root.py:45
+msgid "WhatsApp NG"
+msgstr "WhatsApp NG"
+
+#: addon/appModules/whatsapp_root.py:283
+msgid "Copy current message to clipboard"
+msgstr "نسخ الرسالة الحالية إلى الحافظة"
+
+#: addon/appModules/whatsapp_root.py:324 addon/appModules/whatsapp_root.py:352
+#: addon/appModules/whatsapp_root.py:364
+msgid "Copied"
+msgstr "تم النسخ"
+
+#. Not a message or couldn't copy
+#: addon/appModules/whatsapp_root.py:368
+msgid "Cannot copy"
+msgstr "لا يمكن النسخ"
+
+#: addon/appModules/whatsapp_root.py:372
+msgid "Play voice message"
+msgstr "تشغيل الرسالة الصوتية"
+
+#. No slider or button found
+#: addon/appModules/whatsapp_root.py:386 addon/appModules/whatsapp_root.py:455
+#: addon/appModules/whatsapp_root.py:458
+msgid "No audio message found"
+msgstr "لم يتم العثور على رسالة صوتية"
+
+#. Translators: Read complete message (click "read more" and speak text)
+#: addon/appModules/whatsapp_root.py:462
+msgid "Read complete message (clicks 'read more' button)"
+msgstr "قراءة الرسالة كاملة (بالضغط على زر \"قراءة المزيد\")"
+
+#. Not a text message
+#: addon/appModules/whatsapp_root.py:480
+msgid "Not a text message"
+msgstr "لا توجد رسالة نصية"
+
+#: addon/appModules/whatsapp_root.py:486
+msgid "No message found"
+msgstr "لا توجد رسائل"
+
+#: addon/appModules/whatsapp_root.py:619
+msgid "Text not found"
+msgstr "لا يوجد نص"
+
+#: addon/appModules/whatsapp_root.py:628
+msgid "Open context menu"
+msgstr "فتح قائمة السياق"
+
+#: addon/appModules/whatsapp_root.py:642 addon/appModules/whatsapp_root.py:672
+#: addon/appModules/whatsapp_root.py:675
+msgid "No menu found"
+msgstr "لا توجد قوائم"
+
+#: addon/appModules/whatsapp_root.py:678
+msgid "Focus message composer"
+msgstr "التركيز على حقل كتابة الرسالة"
+
+#: addon/appModules/whatsapp_root.py:690 addon/appModules/whatsapp_root.py:751
+#: addon/appModules/whatsapp_root.py:753
+msgid "Message composer not found"
+msgstr "لم يتم العثور على حقل كتابة الرسالة"
+
+#: addon/appModules/whatsapp_root.py:918
+msgid "Go to WhatsApp conversation list"
+msgstr "الإنتقال إلى قائمة محادثات WhatsApp"
+
+#: addon/appModules/whatsapp_root.py:952 addon/appModules/whatsapp_root.py:1008
+#: addon/appModules/whatsapp_root.py:1011
+msgid "Conversation list not found"
+msgstr "لم يتم العثور على قائمة المحادثات"
+
+#: addon/appModules/whatsapp_root.py:1024
+msgid "Go to WhatsApp message list"
+msgstr "الإنتقال إلى قائمة رسائل WhatsApp"
+
+#: addon/appModules/whatsapp_root.py:1036
+#: addon/appModules/whatsapp_root.py:1092
+msgid "Message list not found"
+msgstr "لم يتم العثور على قائمة الرسائل"
+
+#: addon/appModules/whatsapp_root.py:1105
+msgid "Toggle phone number filtering in conversation list"
+msgstr "تفعيل/تعطيل تصفية أرقام الهواتف في قائمة المحادثات"
+
+#: addon/appModules/whatsapp_root.py:1111
+msgid "Use this command in the conversation list"
+msgstr "استخدم هذا الأمر في قائمة المحادثات"
+
+#: addon/appModules/whatsapp_root.py:1120
+msgid "Conversation list: phone numbers hidden"
+msgstr "قائمة المحادثات: إخفاء أرقام الهواتف"
+
+#: addon/appModules/whatsapp_root.py:1122
+msgid "Conversation list: phone numbers visible"
+msgstr "قائمة المحادثات: إظهار أرقام الهواتف"
+
+#: addon/appModules/whatsapp_root.py:1127
+msgid "Toggle phone number filtering in message list"
+msgstr "تفعيل/تعطيل تصفية أرقام الهواتف في قائمة الرسائل"
+
+#: addon/appModules/whatsapp_root.py:1133
+msgid "Use this command in the message list"
+msgstr "استخدم هذا الأمر في قائمة الرسائل"
+
+#: addon/appModules/whatsapp_root.py:1142
+msgid "Message list: phone numbers hidden"
+msgstr "قائمة الرسائل: إخفاء أرقام الهواتف"
+
+#: addon/appModules/whatsapp_root.py:1144
+msgid "Message list: phone numbers visible"
+msgstr "قائمة الرسائل: إظهار أرقام الهواتف"
+
+#: addon/appModules/whatsapp_root.py:1156
+msgid "Toggle automatic Focus Mode"
+msgstr "التبديل التلقائي إلى النمط التفاعلي"
+
+#: addon/appModules/whatsapp_root.py:1166
+msgid "Auto Focus Mode: enabled"
+msgstr "تفعيل التبديل التلقائي إلى النمط التفاعلي"
+
+#: addon/appModules/whatsapp_root.py:1168
+msgid "Auto Focus Mode: disabled"
+msgstr "تعطيل التبديل التلقائي إلى النمط التفاعلي"
+
+#. Add-on summary/title, usually the user visible name of the add-on
+#. Translators: Summary/title for this add-on
+#. to be shown on installation and add-on information found in add-on store
+#: buildVars.py:21
+msgid "WhatsApp Desktop accessibility enhancements"
+msgstr "تحسين إمكانية الوصول في WhatsApp Desktop"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-on store
+#: buildVars.py:24
+msgid ""
+"Provides accessibility improvements for the web-based WhatsApp Desktop, "
+"including navigation shortcuts, message interaction enhancements, and better "
+"screen reader support."
+msgstr ""
+"توفر هذه الإضافة تحسينات في إمكانية الوصول لتطبيق Web WhatsApp Desktop بما "
+"في ذلك اختصارات التنقل، وتحسينات التفاعل مع الرسائل، ودعم أفضل لقارئات "
+"الشاشة."
+
+#. Brief changelog for this version
+#. Translators: what's new content for the add-on version to be shown in the add-on store
+#: buildVars.py:29
+msgid ""
+"- Turkish translation support.\n"
+"- Toggle automatic Focus Mode option.\n"
+"- Improved navigation performance.\n"
+"- Video playback with Enter key.\n"
+"- Escape key now passes through correctly."
+msgstr ""
+"- دعم الترجمة إلى اللغة التركية\n"
+"- خيار تفعيل/تعطيل نمط التصفح (قم بتعيين الاختصار من Input Gestures)\n"
+"- تحسين أداء التنقل.\n"
+"- تشغيل رسائل الفيديو عن طريق مفتاح Enter.\n"
+"- مفتاح Escape أصبح يمرر الأمر إلى WhatsApp بشكل صحيح"
