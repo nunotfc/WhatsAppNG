@@ -1,0 +1,179 @@
+# WhatsApp NG - English Translation
+# Copyright (C) 2025
+# This file is distributed under the same license as the whatsAppNG package.
+# Nuno Costa <nrfcosta21@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: whatsAppNG 1.1.1\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2026-02-08 10:59+0300\n"
+"PO-Revision-Date: 2026-02-08 11:02+0300\n"
+"Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
+"Language-Team: Russian translation team <nvda.ru>, Danil Kostenkov "
+"<danilkostenkov38@gmail.com>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ../../../..\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: addon/appModules\n"
+
+#: addon/appModules/whatsapp_root.py:45
+msgid "WhatsApp NG"
+msgstr "WhatsApp NG"
+
+#: addon/appModules/whatsapp_root.py:283
+msgid "Copy current message to clipboard"
+msgstr "Скопировать текущее сообщение в буфер обмена"
+
+#: addon/appModules/whatsapp_root.py:324 addon/appModules/whatsapp_root.py:352
+#: addon/appModules/whatsapp_root.py:364
+msgid "Copied"
+msgstr "Скопировано"
+
+#: addon/appModules/whatsapp_root.py:368
+msgid "Cannot copy"
+msgstr "Не удалось скопировать"
+
+#: addon/appModules/whatsapp_root.py:372
+msgid "Play voice message"
+msgstr "Воспроизвести голосовое сообщение"
+
+#: addon/appModules/whatsapp_root.py:386 addon/appModules/whatsapp_root.py:455
+#: addon/appModules/whatsapp_root.py:458
+msgid "No audio message found"
+msgstr "Голосовое сообщение не найдено"
+
+#: addon/appModules/whatsapp_root.py:462
+msgid "Read complete message (clicks 'read more' button)"
+msgstr "Прочитать текст сообщения полностью (нажимает кнопку «читать дальше»)"
+
+#: addon/appModules/whatsapp_root.py:476
+msgid "No message found"
+msgstr "Сообщение не найдено"
+
+#: addon/appModules/whatsapp_root.py:597
+msgid "Text not found"
+msgstr "Текст не найден"
+
+#: addon/appModules/whatsapp_root.py:606
+msgid "Open context menu"
+msgstr "Открыть контекстное меню"
+
+#: addon/appModules/whatsapp_root.py:620 addon/appModules/whatsapp_root.py:650
+#: addon/appModules/whatsapp_root.py:653
+msgid "No menu found"
+msgstr "Меню не найдено"
+
+#: addon/appModules/whatsapp_root.py:656
+msgid "Focus message composer"
+msgstr "Поместить фокус на поле написать сообщение"
+
+#: addon/appModules/whatsapp_root.py:668 addon/appModules/whatsapp_root.py:729
+#: addon/appModules/whatsapp_root.py:731
+msgid "Message composer not found"
+msgstr "Поле написать сообщение не найдено"
+
+#: addon/appModules/whatsapp_root.py:896
+msgid "Go to WhatsApp conversation list"
+msgstr "Перейти к списку чатов WhatsApp"
+
+#: addon/appModules/whatsapp_root.py:930 addon/appModules/whatsapp_root.py:986
+#: addon/appModules/whatsapp_root.py:989
+msgid "Conversation list not found"
+msgstr "Список чатов не найден"
+
+#: addon/appModules/whatsapp_root.py:1002
+msgid "Go to WhatsApp message list"
+msgstr "Перейти к списку сообщений WhatsApp"
+
+#: addon/appModules/whatsapp_root.py:1014
+#: addon/appModules/whatsapp_root.py:1070
+msgid "Message list not found"
+msgstr "Список сообщений не найден"
+
+#: addon/appModules/whatsapp_root.py:1083
+msgid "Toggle phone number filtering in conversation list"
+msgstr "Переключить фильтрацию озвучивания номеров телефонов в списке чатов"
+
+#: addon/appModules/whatsapp_root.py:1089
+msgid "Use this command in the conversation list"
+msgstr "Используйте эту команду в списке чатов"
+
+#: addon/appModules/whatsapp_root.py:1098
+msgid "Conversation list: phone numbers hidden"
+msgstr "Список чатов: не озвучивать номера телефонов"
+
+#: addon/appModules/whatsapp_root.py:1100
+msgid "Conversation list: phone numbers visible"
+msgstr "Список чатов: озвучивать номера телефонов"
+
+#: addon/appModules/whatsapp_root.py:1105
+msgid "Toggle phone number filtering in message list"
+msgstr ""
+"Переключить фильтрацию озвучивания номеров телефонов в списке сообщений"
+
+#: addon/appModules/whatsapp_root.py:1111
+msgid "Use this command in the message list"
+msgstr "Используйте эту команду в списке сообщений"
+
+#: addon/appModules/whatsapp_root.py:1120
+msgid "Message list: phone numbers hidden"
+msgstr "Список сообщений: не озвучивать номера телефонов"
+
+#: addon/appModules/whatsapp_root.py:1122
+msgid "Message list: phone numbers visible"
+msgstr "Список сообщений: озвучивать номера телефонов"
+
+#: addon/appModules/whatsapp_root.py:1134
+msgid "Toggle automatic Focus Mode"
+msgstr "Переключить автоматическое включение режима редактирования"
+
+#: addon/appModules/whatsapp_root.py:1144
+msgid "Auto Focus Mode: enabled"
+msgstr "Автоматическое включение режима редактирования: включено"
+
+#: addon/appModules/whatsapp_root.py:1146
+msgid "Auto Focus Mode: disabled"
+msgstr "Автоматическое включение режима редактирования: выключено"
+
+#: buildVars.py:21
+msgid "WhatsApp Desktop accessibility enhancements"
+msgstr ""
+"WhatsApp Desktop accessibility enhancements (Улучшения доступности для "
+"WhatsApp Desktop)"
+
+#: buildVars.py:24
+msgid ""
+"Provides accessibility improvements for the web-based WhatsApp Desktop, "
+"including navigation shortcuts, message interaction enhancements, and better "
+"screen reader support."
+msgstr ""
+"Это дополнение предоставляет улучшения доступности для веб-версии WhatsApp "
+"Desktop, предоставляя сочитания клавиш для быстрого перехода к элементам "
+"интерфейса, улучшения взаимодействия с сообщениями и улучшенную поддержку "
+"программ экранного доступа."
+
+#: buildVars.py:29
+msgid ""
+"Initial release.\n"
+"- Navigation shortcuts for conversation list, message list, and message "
+"composer.\n"
+"- Voice message playback with support for individual chats and groups.\n"
+"- Context menu access for message actions.\n"
+"- Phone number filtering toggle for conversations and messages.\n"
+"- Automatic focus mode activation in WhatsApp Desktop."
+msgstr ""
+"Первая версия.\n"
+"- Добавлены горячие клавиши для списка чатов, списка сообщений и поля "
+"написать сообщение.\n"
+"- Поддержка воспроизведения голосовых сообщений для чатов и групп.\\n\n"
+"- Доступ к контекстному меню для действий с сообщениями.\n"
+"- Переключатель фильтрации озвучивания номеров телефонов для чатов и списка "
+"сообщений.\n"
+"- Автоматическое включение режима редактирования в WhatsApp Desktop."
