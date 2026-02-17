@@ -295,63 +295,42 @@ class AppModule(appModuleHandler.AppModule):
 			if parent:
 				siblings = getattr(parent, "children", []) or []
 
-				# FIRST: Check if complete text already exists (> 800 chars)
-				longest_text = ""
+				# Collect all text parts (same logic as Control+R)
+				all_text_parts = []
 				for sibling in siblings:
-					def find_longest(obj):
-						nonlocal longest_text
+					def collect_texts(o):
 						try:
-							role = _role(obj)
+							role = _role(o)
 							if role is None:
 								return
 							if role == controlTypes.Role.STATICTEXT:
-								name = getattr(obj, "name", "") or ""
-								if name and len(name.strip()) > len(longest_text):
-									longest_text = name.strip()
-							value = getattr(obj, "value", "") or ""
-							if value and len(str(value).strip()) > len(longest_text):
-								longest_text = str(value).strip()
-							children = getattr(obj, "children", []) or []
+								name = getattr(o, "name", "") or ""
+								if name:
+									clean = name.strip()
+									# Filter out non-content labels
+									if clean and not clean.startswith("00:") and len(clean) > 20:
+										all_text_parts.append(clean)
+							value = getattr(o, "value", "") or ""
+							if value:
+								clean_v = str(value).strip()
+								if len(clean_v) > 20:
+									all_text_parts.append(clean_v)
+							children = getattr(o, "children", []) or []
 							for child in children:
-								find_longest(child)
+								collect_texts(child)
 						except Exception:
 							pass
 
-					find_longest(sibling)
+					collect_texts(sibling)
 
-				# If complete text found, copy it
-				if len(longest_text) > 800:
-					api.copyToClip(longest_text)
+				# Combine all text parts
+				full_text = " ".join(all_text_parts)
+
+				# If found text, copy it
+				if full_text and len(full_text) > 50:
+					api.copyToClip(full_text)
 					ui.message(_("Copied"))
 					return
-
-				# SECOND: Not found, try to find first TEXT object
-				for sibling in siblings:
-					def find_first_text(obj):
-						try:
-							role = _role(obj)
-							if role == controlTypes.Role.STATICTEXT:
-								name = getattr(obj, "name", "") or ""
-								if name and len(name.strip()) > 20:
-									# Filter out NVDA labels
-									nvda_labels = ['secção', 'section', 'list item', 'item', 'de', 'message', 'mensagem']
-									if not any(label.lower() in name.lower() for label in nvda_labels):
-										return name.strip()
-							children = getattr(obj, "children", []) or []
-							for child in children:
-								result = find_first_text(child)
-								if result:
-									return result
-						except Exception:
-							pass
-						return None
-
-					clean_text = find_first_text(obj)
-
-					if clean_text:
-						api.copyToClip(clean_text)
-						ui.message(_("Copied"))
-						return
 
 			# Fallback: use obj.name with filters
 			text = obj.name.strip()
