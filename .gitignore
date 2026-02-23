@@ -49,3 +49,4 @@ libexpat.dll
 # Claude AI
 .claude/
 agents.md
+bin/
