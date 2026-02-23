@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2026-02-11 22:53+0000\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2026-02-18 19:21+0000\n"
 "PO-Revision-Date: 2026-02-12 07:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -13,129 +13,128 @@ msgstr ""
 "X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: .\n"
 
-#: addon/appModules/whatsapp_root.py:45
+#: addon\appModules\whatsapp_root.py:46
 msgid "WhatsApp NG"
 msgstr "WhatsApp NG"
 
-#: addon/appModules/whatsapp_root.py:283
+#: addon\appModules\whatsapp_root.py:284
 msgid "Copy current message to clipboard"
 msgstr "Копіювати поточне повідомлення в буфер обміну"
 
-#: addon/appModules/whatsapp_root.py:324 addon/appModules/whatsapp_root.py:352
-#: addon/appModules/whatsapp_root.py:364
+#: addon\appModules\whatsapp_root.py:332 addon\appModules\whatsapp_root.py:344
 msgid "Copied"
 msgstr "Скопійовано"
 
 #. Not a message or couldn't copy
-#: addon/appModules/whatsapp_root.py:368
+#: addon\appModules\whatsapp_root.py:348
 msgid "Cannot copy"
 msgstr "Неможливо скопіювати"
 
-#: addon/appModules/whatsapp_root.py:372
+#: addon\appModules\whatsapp_root.py:352
 msgid "Play voice message"
 msgstr "Відтворити голосове повідомлення"
 
 #. No slider or button found
-#: addon/appModules/whatsapp_root.py:386 addon/appModules/whatsapp_root.py:455
-#: addon/appModules/whatsapp_root.py:458
+#: addon\appModules\whatsapp_root.py:366 addon\appModules\whatsapp_root.py:435
+#: addon\appModules\whatsapp_root.py:438
 msgid "No audio message found"
 msgstr "Аудіоповідомлення не знайдено"
 
 #. Translators: Read complete message (click "read more" and speak text)
-#: addon/appModules/whatsapp_root.py:462
+#: addon\appModules\whatsapp_root.py:442
 msgid "Read complete message (clicks 'read more' button)"
 msgstr "Прочитати повідомлення повністю (натисніть кнопку «читати далі»)"
 
 #. Not a text message
-#: addon/appModules/whatsapp_root.py:480
+#: addon\appModules\whatsapp_root.py:460
 msgid "Not a text message"
 msgstr "Не текстове повідомлення"
 
-#: addon/appModules/whatsapp_root.py:486
+#: addon\appModules\whatsapp_root.py:466
 msgid "No message found"
 msgstr "Повідомлення не знайдено"
 
-#: addon/appModules/whatsapp_root.py:619
+#: addon\appModules\whatsapp_root.py:620
 msgid "Text not found"
 msgstr "Текст не знайдено"
 
-#: addon/appModules/whatsapp_root.py:628
+#: addon\appModules\whatsapp_root.py:629
 msgid "Open context menu"
 msgstr "Відкрити контекстне меню"
 
-#: addon/appModules/whatsapp_root.py:642 addon/appModules/whatsapp_root.py:672
-#: addon/appModules/whatsapp_root.py:675
+#: addon\appModules\whatsapp_root.py:643 addon\appModules\whatsapp_root.py:673
+#: addon\appModules\whatsapp_root.py:676
 msgid "No menu found"
 msgstr "Меню не знайдено"
 
-#: addon/appModules/whatsapp_root.py:678
+#: addon\appModules\whatsapp_root.py:679
 msgid "Focus message composer"
 msgstr "Перейти до редактора повідомлення"
 
-#: addon/appModules/whatsapp_root.py:690 addon/appModules/whatsapp_root.py:751
-#: addon/appModules/whatsapp_root.py:753
+#: addon\appModules\whatsapp_root.py:691 addon\appModules\whatsapp_root.py:752
+#: addon\appModules\whatsapp_root.py:754
 msgid "Message composer not found"
 msgstr "Редактор повідомлення не знайдено"
 
-#: addon/appModules/whatsapp_root.py:918
+#: addon\appModules\whatsapp_root.py:919
 msgid "Go to WhatsApp conversation list"
 msgstr "Перейти до списку розмов WhatsApp"
 
-#: addon/appModules/whatsapp_root.py:952 addon/appModules/whatsapp_root.py:1008
-#: addon/appModules/whatsapp_root.py:1011
+#: addon\appModules\whatsapp_root.py:953 addon\appModules\whatsapp_root.py:1009
+#: addon\appModules\whatsapp_root.py:1012
 msgid "Conversation list not found"
 msgstr "Список розмов не знайдено"
 
-#: addon/appModules/whatsapp_root.py:1024
+#: addon\appModules\whatsapp_root.py:1025
 msgid "Go to WhatsApp message list"
 msgstr "Перейти до списку повідомлень WhatsApp"
 
-#: addon/appModules/whatsapp_root.py:1036
-#: addon/appModules/whatsapp_root.py:1092
+#: addon\appModules\whatsapp_root.py:1037
+#: addon\appModules\whatsapp_root.py:1093
 msgid "Message list not found"
 msgstr "Список повідомлень не знайдено"
 
-#: addon/appModules/whatsapp_root.py:1105
+#: addon\appModules\whatsapp_root.py:1106
 msgid "Toggle phone number filtering in conversation list"
 msgstr "Перемкнути фільтрування телефонних номерів у списку розмов"
 
-#: addon/appModules/whatsapp_root.py:1111
+#: addon\appModules\whatsapp_root.py:1112
 msgid "Use this command in the conversation list"
 msgstr "Використовуйте цю команду в списку розмов"
 
-#: addon/appModules/whatsapp_root.py:1120
+#: addon\appModules\whatsapp_root.py:1121
 msgid "Conversation list: phone numbers hidden"
 msgstr "Список розмов: номери телефонів приховано"
 
-#: addon/appModules/whatsapp_root.py:1122
+#: addon\appModules\whatsapp_root.py:1123
 msgid "Conversation list: phone numbers visible"
 msgstr "Список розмов: телефонні номери показано"
 
-#: addon/appModules/whatsapp_root.py:1127
+#: addon\appModules\whatsapp_root.py:1128
 msgid "Toggle phone number filtering in message list"
 msgstr "Перемкнути фільтрування телефонних номерів у списку повідомлень"
 
-#: addon/appModules/whatsapp_root.py:1133
+#: addon\appModules\whatsapp_root.py:1134
 msgid "Use this command in the message list"
 msgstr "Використовуйте цю команду в списку повідомлень"
 
-#: addon/appModules/whatsapp_root.py:1142
+#: addon\appModules\whatsapp_root.py:1143
 msgid "Message list: phone numbers hidden"
 msgstr "Список повідомлень: номери телефонів приховано"
 
-#: addon/appModules/whatsapp_root.py:1144
+#: addon\appModules\whatsapp_root.py:1145
 msgid "Message list: phone numbers visible"
 msgstr "Список повідомлень: номери телефонів показано"
 
-#: addon/appModules/whatsapp_root.py:1156
+#: addon\appModules\whatsapp_root.py:1157
 msgid "Toggle automatic Focus Mode"
 msgstr "Увімкнути автоматичний режим фокусування"
 
-#: addon/appModules/whatsapp_root.py:1166
+#: addon\appModules\whatsapp_root.py:1167
 msgid "Auto Focus Mode: enabled"
 msgstr "Режим автофокусування: увімкнено"
 
-#: addon/appModules/whatsapp_root.py:1168
+#: addon\appModules\whatsapp_root.py:1169
 msgid "Auto Focus Mode: disabled"
 msgstr "Режим автофокусування: вимкнено"
 
@@ -168,51 +167,9 @@ msgid ""
 "- Video playback with Enter key.\n"
 "- Escape key now passes through correctly."
 msgstr ""
-
-#~ msgid ""
-#~ "Initial release.\n"
-#~ "- Navigation shortcuts for conversation list, message list, and message "
-#~ "composer.\n"
-#~ "- Voice message playback with support for individual chats and groups.\n"
-#~ "- Context menu access for message actions.\n"
-#~ "- Phone number filtering toggle for conversations and messages.\n"
-#~ "- Automatic focus mode activation in WhatsApp Desktop."
-#~ msgstr ""
-#~ "Початкова версія.\n"
-#~ "-Гарячі клавіші навігації для списку розмов, списку повідомлень та "
-#~ "редактора повідомлень.\n"
-#~ "- Відтворення голосових повідомлень з підтримкою індивідуальних чатів та "
-#~ "груп.\n"
-#~ "- Доступ до контекстного меню для дій з повідомленнями.\n"
-#~ "- Перемикач фільтрування телефонних номерів для розмов та повідомлень.\n"
-#~ "- Автоматична активація режиму фокусування в WhatsApp Desktop."
-
-#~ msgid "Conversation list: {status}, Message list: {status2}"
-#~ msgstr "Список розмов: {status}, список повідомлень: {status2}"
-
-#~ msgid "enabled"
-#~ msgstr "увімкнено"
-
-#~ msgid "disabled"
-#~ msgstr "вимкнено"
-
-#~ msgid "Error: {error}"
-#~ msgstr "Помилка: {error}"
-
-#~ msgid "No parent"
-#~ msgstr "Немає батьківського елемента"
-
-#~ msgid "  Button {n}: {name} {state}"
-#~ msgstr "  Кнопка {n}: {name} {state}"
-
-#~ msgid "Role {role}, [{path}], {focusable}, {name}"
-#~ msgstr "Роль {role}, [{path}], {focusable}, {name}"
-
-#~ msgid "Config: Conversations={val}, Messages={val2}"
-#~ msgstr "Конфігурація: Conversations={val}, Messages={val2}"
-
-#~ msgid "focusable"
-#~ msgstr "сфокусований"
-
-#~ msgid "not focusable"
-#~ msgstr "не фокусується"
+"- Виправлено Control+R для роботи лише з текстовими повідомленнями.\n"
+"- Підтримка турецької перекладу.\n"
+"- Опція перемикання автоматичного режиму фокусування.\n"
+"- Покращено продуктивність навігації.\n"
+"- Відтворення відео клавішею Enter.\n"
+"- Клавіша Escape тепер проходить коректно."

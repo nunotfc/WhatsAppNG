@@ -41,6 +41,20 @@ Configure os atalhos em:
 
 ## Registro de Alterações
 
+### Versão 1.4.0 (2026-02-23)
+
+**Adicionado:**
+- Suporte completo aos seguintes idiomas: Árabe, Alemão, Espanhol, Italiano e Russo
+- Tradução ucraniana atualizada com as strings mais recentes
+
+**Corrigido:**
+- Erro "Texto não encontrado" no Control+R após clicar no botão "ler mais"
+- Control+R agora funciona apenas em mensagens de texto (exibe "Não é uma mensagem de texto" para voz/imagens)
+
+**Alterado:**
+- Links do repositório atualizados para o novo local (nunotfc/WhatsAppNG)
+- Documentação: Todos os READMEs localizados agora incluem o changelog completo até a versão 1.3.0
+
 ### Versão 1.3.0 (2026-02-07)
 
 **Adicionado:**

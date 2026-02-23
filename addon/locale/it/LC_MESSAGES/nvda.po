@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: whatsAppNG 1.1.1\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2026-02-18 19:21+0000\n"
-"PO-Revision-Date: 2026-02-14 10:07+0100\n"
+"PO-Revision-Date: 2026-02-18 17:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: de_DE\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #: addon\appModules\whatsapp_root.py:46
 msgid "WhatsApp NG"
@@ -24,132 +24,133 @@ msgstr "WhatsApp NG"
 
 #: addon\appModules\whatsapp_root.py:284
 msgid "Copy current message to clipboard"
-msgstr "Aktuelle Nachricht in die Zwischenablage kopieren"
+msgstr "Copia il messaggio attuale negli appunti"
 
 #: addon\appModules\whatsapp_root.py:332 addon\appModules\whatsapp_root.py:344
 msgid "Copied"
-msgstr "Kopiert"
+msgstr "Copiato"
 
 #. Not a message or couldn't copy
 #: addon\appModules\whatsapp_root.py:348
 msgid "Cannot copy"
-msgstr "Kann nicht kopiert werden"
+msgstr "Impossibile copiare"
 
 #: addon\appModules\whatsapp_root.py:352
 msgid "Play voice message"
-msgstr "Sprachnachricht abspielen"
+msgstr "Riproduci messaggio vocale"
 
 #. No slider or button found
 #: addon\appModules\whatsapp_root.py:366 addon\appModules\whatsapp_root.py:435
 #: addon\appModules\whatsapp_root.py:438
 msgid "No audio message found"
-msgstr "Keine Sprachnachricht gefunden"
+msgstr "Nessun messaggio audio trovato"
 
 #. Translators: Read complete message (click "read more" and speak text)
 #: addon\appModules\whatsapp_root.py:442
 msgid "Read complete message (clicks 'read more' button)"
-msgstr ""
-"Vollständige Nachricht lesen (klickt auf die Schaltfläche „Mehr lesen“)"
+msgstr "Leggi il messaggio completo (clicca il pulsante 'Leggi di più')"
 
 #. Not a text message
 #: addon\appModules\whatsapp_root.py:460
 msgid "Not a text message"
-msgstr "Keine Textnachricht"
+msgstr "Non è un messaggio di testo"
 
 #: addon\appModules\whatsapp_root.py:466
 msgid "No message found"
-msgstr "Keine Nachricht gefunden"
+msgstr "Nessun messaggio trovato"
 
 #: addon\appModules\whatsapp_root.py:620
 msgid "Text not found"
-msgstr "Text nicht gefunden"
+msgstr "Testo non trovato"
 
 #: addon\appModules\whatsapp_root.py:629
 msgid "Open context menu"
-msgstr "Kontextmenü öffnen"
+msgstr "Apri il menu contestuale"
 
 #: addon\appModules\whatsapp_root.py:643 addon\appModules\whatsapp_root.py:673
 #: addon\appModules\whatsapp_root.py:676
 msgid "No menu found"
-msgstr "Kein Menü gefunden"
+msgstr "Nessun menu trovato"
 
 #: addon\appModules\whatsapp_root.py:679
 msgid "Focus message composer"
-msgstr "Verfasser von Fokusnachrichten"
+msgstr "Sposta il focus sul campo di scrittura del messaggio"
 
 #: addon\appModules\whatsapp_root.py:691 addon\appModules\whatsapp_root.py:752
 #: addon\appModules\whatsapp_root.py:754
 msgid "Message composer not found"
-msgstr "Nachrichtenverfasser nicht gefunden"
+msgstr "Campo di scrittura del messaggio non trovato"
 
 #: addon\appModules\whatsapp_root.py:919
 msgid "Go to WhatsApp conversation list"
-msgstr "Zur WhatsApp-Konversationsliste gehen"
+msgstr "Vai alla lista conversazioni di Whatsapp"
 
 #: addon\appModules\whatsapp_root.py:953 addon\appModules\whatsapp_root.py:1009
 #: addon\appModules\whatsapp_root.py:1012
 msgid "Conversation list not found"
-msgstr "Konversationsliste nicht gefunden"
+msgstr "Lista conversazioni non trovata"
 
 #: addon\appModules\whatsapp_root.py:1025
 msgid "Go to WhatsApp message list"
-msgstr "Zur WhatsApp-Nachrichtenliste gehen"
+msgstr "Vai alla lista dei messaggi di Whatsapp"
 
 #: addon\appModules\whatsapp_root.py:1037
 #: addon\appModules\whatsapp_root.py:1093
 msgid "Message list not found"
-msgstr "Nachrichtenliste nicht gefunden"
+msgstr "Lista dei messaggi non trovata"
 
 #: addon\appModules\whatsapp_root.py:1106
 msgid "Toggle phone number filtering in conversation list"
-msgstr "Schalten Sie die Telefonnummernfilterung in der Konversationsliste um"
+msgstr ""
+"Attiva/disattiva il filtro numeri di telefono nella lista conversazioni"
 
 #: addon\appModules\whatsapp_root.py:1112
 msgid "Use this command in the conversation list"
-msgstr "Verwenden Sie diesen Befehl in der Konversationsliste"
+msgstr "Usa questo comando nella lista conversazioni"
 
 #: addon\appModules\whatsapp_root.py:1121
 msgid "Conversation list: phone numbers hidden"
-msgstr "Konversationsliste: Telefonnummern ausgeblendet"
+msgstr "Lista conversazioni: numeri di telefono nascosti"
 
 #: addon\appModules\whatsapp_root.py:1123
 msgid "Conversation list: phone numbers visible"
-msgstr "Konversationsliste: Telefonnummern sichtbar"
+msgstr "Lista conversazioni: numeri di telefono visibili"
 
 #: addon\appModules\whatsapp_root.py:1128
 msgid "Toggle phone number filtering in message list"
-msgstr "Schalten Sie die Telefonnummernfilterung in der Nachrichtenliste um"
+msgstr ""
+"Attiva/disattiva filtro dei numeri di telefono nella lista dei messaggi"
 
 #: addon\appModules\whatsapp_root.py:1134
 msgid "Use this command in the message list"
-msgstr "Verwenden Sie diesen Befehl in der Nachrichtenliste"
+msgstr "Usa questo comando nella lista dei messaggi"
 
 #: addon\appModules\whatsapp_root.py:1143
 msgid "Message list: phone numbers hidden"
-msgstr "Nachrichtenliste: Telefonnummern ausgeblendet"
+msgstr "Lista dei messaggi: Numeri di telefono nascosti"
 
 #: addon\appModules\whatsapp_root.py:1145
 msgid "Message list: phone numbers visible"
-msgstr "Nachrichtenliste: Telefonnummern sichtbar"
+msgstr "Lista dei messaggi: numeri di telefono visibili"
 
 #: addon\appModules\whatsapp_root.py:1157
 msgid "Toggle automatic Focus Mode"
-msgstr "Schalten Sie den automatischen Fokusmodus um"
+msgstr "Attiva/disattiva modalità focus automatica"
 
 #: addon\appModules\whatsapp_root.py:1167
 msgid "Auto Focus Mode: enabled"
-msgstr "Autofokus-Modus: aktiviert"
+msgstr "Modalità focus automatica: attivata"
 
 #: addon\appModules\whatsapp_root.py:1169
 msgid "Auto Focus Mode: disabled"
-msgstr "Autofokus-Modus: deaktiviert"
+msgstr "Modalità focus automatica: disattivata"
 
 #. Add-on summary/title, usually the user visible name of the add-on
 #. Translators: Summary/title for this add-on
 #. to be shown on installation and add-on information found in add-on store
 #: buildVars.py:21
 msgid "WhatsApp Desktop accessibility enhancements"
-msgstr "Verbesserungen der Barrierefreiheit von WhatsApp Desktop"
+msgstr "Migliorie di accessibilità per WhatsApp desktop"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-on store
@@ -159,10 +160,9 @@ msgid ""
 "including navigation shortcuts, message interaction enhancements, and better "
 "screen reader support."
 msgstr ""
-"Bietet Verbesserungen der Barrierefreiheit für den webbasierten WhatsApp-"
-"Desktop, einschließlich Navigationsverknüpfungen, Verbesserungen der "
-"Nachrichteninteraktion und besserer Unterstützung für "
-"Bildschirmleseprogramme."
+"Fornisce miglioramenti di accessibilità per WhatsApp Desktop basata sul web, "
+"come tasti rapidi di navigazione, migliorie nell'interazione con i messaggi, "
+"e un miglior supporto allo screen reader."
 
 #. Brief changelog for this version
 #. Translators: what's new content for the add-on version to be shown in the add-on store
@@ -175,9 +175,9 @@ msgid ""
 "- Video playback with Enter key.\n"
 "- Escape key now passes through correctly."
 msgstr ""
-"- Control+R funktioniert jetzt nur bei Textnachrichten.\n"
-"- Unterstützung der deutschen Übersetzung.\n"
-"- Option zum Umschalten des automatischen Fokusmodus.\n"
-"- Verbesserte Navigationsleistung.\n"
-"- Videowiedergabe mit der Eingabetaste.\n"
-"- Die Escape-Taste wird jetzt korrekt durchgereicht."
+"- Control+R ora funziona solo sui messaggi di testo.\n"
+"- Supporto traduzione turca.\n"
+"- Opzione attiva/disattiva modalità focus automatica.\n"
+"- Prestazioni di navigazione migliorate.\n"
+"- Riproduzione video con tasto Invio.\n"
+"- Il tasto Esc ora passa correttamente."

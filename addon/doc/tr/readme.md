@@ -10,12 +10,13 @@ Web tabanlı WhatsApp Masaüstü için erişilebilirlik iyileştirmeleri sağlay
 * **Enter**: Sesli mesajı oynat (bireysel sohbetlerde ve gruplarda çalışır)
 * **Shift+Enter**: Mesaj bağlam menüsünü aç
 * **Control+C**: Geçerli mesajı panoya kopyala
-* **Control+R**: Mesajın tamamını oku (gerekirse “devamını oku” düğmesine tıklar)
+* **Control+R**: Mesajın tamamını oku (gerekirse "devamını oku" düğmesine tıklar)
 
-### Geçiş Komutları (varsayılan kısayol yoktur – Girdi Hareketleri’nden yapılandırılır)
+### Geçiş Komutları (varsayılan kısayol yoktur – Girdi Hareketleri'nden yapılandırılır)
 
 * Sohbet listesinde telefon numarası filtrelemeyi aç/kapat
 * Mesaj listesinde telefon numarası filtrelemeyi aç/kapat
+* Otomatik Odak Modunu aç/kapat (gerektiğinde Gözden Geçirme Moduna izin verir)
 
 ## Gereksinimler
 
@@ -40,6 +41,33 @@ Kısayolları şuradan yapılandırın:
 **NVDA menüsü → Tercihler → Girdi Hareketleri → WhatsApp NG**
 
 ## Değişiklik Günlüğü
+
+### Sürüm 1.4.0 (2026-02-23)
+
+**Eklenenler:**
+- Tam dil desteği: Arapça, Almanca, İspanyolca, İtalyanca ve Rusça
+- Ukraynca çevirisi en recent dizgilerle güncellendi
+
+**Düzeltilenler:**
+- "Devamını oku" düğmesine tıklandıktan sonra Control+R'de "Metin bulunamadı" hatası
+- Control+R artık sadece metin mesajlarında çalışıyor (ses/görseller için "Metin mesajı değil" gösterir)
+
+**Değiştirilenler:**
+- Depo bağlantıları yeni depoya güncellendi (nunotfc/WhatsAppNG)
+- Belgeleme: Tüm yerelleştirilmiş README'ler artık 1.3.0 sürümüne kadar tam değişiklik günlüğünü içeriyor
+
+### Sürüm 1.3.0 (2026-02-07)
+
+**Eklenenler:**
+* Türkçe çeviri desteği
+* Otomatik Odak Modunu aç/kapat seçeneği (Girdi Hareketleri'nde hareket yapılandırın)
+
+**Değiştirilenler:**
+* İyileştirilmiş performans: Gezinme komutları artık tekrarlı kullanımda daha hızlı
+* Escape tuhu artık doğru şekilde WhatsApp'a iletiliyor
+
+**Düzeltilenler:**
+* Enter artık video mesajlarını oynatıyor (önceden sadece ses için çalışıyordu)
 
 ### Sürüm 1.1.1 (2025-01-31)
 
@@ -92,4 +120,13 @@ Modern WhatsApp Desktop deneyimi için erişilebilirlik iyileştirmeleri sağlam
 ## Destek
 
 Sorunlar veya öneriler için lütfen şurayı ziyaret edin:
-[https://github.com/nunotfc/whatsAppNG/issues](https://github.com/nunotfc/whatsAppNG/issues)
+https://github.com/nunotfc/whatsAppNG/issues
+
+## Çeviri Derlemesi
+
+Çevirileri güncellemek veya derlemek için:
+```bash
+scons pot
+```
+
+Bu işlem için GNU Gettext araçlarının yüklü olması gerekir.

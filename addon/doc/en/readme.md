@@ -41,6 +41,20 @@ Configure shortcuts in:
 
 ## Changelog
 
+### Version 1.4.0 (2026-02-23)
+
+**Added:**
+- Full language support: Arabic, German, Spanish, Italian, and Russian
+- Ukrainian translation updated with latest strings
+
+**Fixed:**
+- "Text not found" error in Control+R after clicking "read more" button
+- Control+R now works only on text messages (shows "Not a text message" for voice/images)
+
+**Changed:**
+- Repository links updated to new repository (nunotfc/WhatsAppNG)
+- Documentation: All localized READMEs now include complete changelog through version 1.3.0
+
 ### Version 1.3.0 (2026-02-07)
 
 **Added:**
