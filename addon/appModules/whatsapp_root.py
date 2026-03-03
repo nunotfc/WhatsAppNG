@@ -71,8 +71,6 @@ class AppModule(appModuleHandler.AppModule):
 		# Register handler to auto-reactivate browse mode if deactivated
 		treeInterceptorHandler.post_browseModeStateChange.register(self._onBrowseModeStateChange)
 
-		# Lazy cache: initialized on first shortcut use
-
 	def _loadConfigCache(self):
 		"""Load all config values into cache once."""
 		try:
@@ -105,6 +103,11 @@ class AppModule(appModuleHandler.AppModule):
 				# Only process WhatsApp objects (check by appModule)
 				app = getattr(focus, "appModule", None)
 				if app and hasattr(app, "appName") and app.appName == "whatsapp.root":
+					# CRITICAL: Only act if this instance matches the focus processID
+					# NVDA creates multiple instances for different processes
+					focus_process_id = getattr(focus, "processID", None)
+					if focus_process_id != self.processID:
+						return
 					# Force passThrough = True (Focus Mode)
 					focus.treeInterceptor.passThrough = True
 		except:
@@ -279,61 +282,126 @@ class AppModule(appModuleHandler.AppModule):
 		"""Read from cache (much faster than config.conf)"""
 		return self._config_cache.get('autoFocusMode', True)
 
+	def _findButtons(self, obj):
+		"""Find all buttons recursively."""
+		buttons = []
+		if _role(obj) == controlTypes.Role.BUTTON:
+			buttons.append(obj)
+		for child in getattr(obj, "children", []):
+			buttons.extend(self._findButtons(child))
+		return buttons
+
+	def _findSlider(self, obj):
+		"""Find slider or progressbar object recursively."""
+		try:
+			role = _role(obj)
+			if role is None:
+				return None
+			if role == controlTypes.Role.SLIDER or role == controlTypes.Role.PROGRESSBAR:
+				return obj
+			for child in getattr(obj, "children", []):
+				result = self._findSlider(child)
+				if result:
+					return result
+		except Exception:
+			pass
+		return None
+
+	def _collectButtonsUntil(self, obj, stop_obj):
+		"""Collect all buttons until reaching stop_obj (stop searching when found)."""
+		buttons = []
+		if obj is stop_obj:
+			return buttons, True  # Found! Return empty list and True flag
+		if _role(obj) == controlTypes.Role.BUTTON:
+			buttons.append(obj)
+		for child in getattr(obj, "children", []):
+			child_buttons, found = self._collectButtonsUntil(child, stop_obj)
+			buttons.extend(child_buttons)
+			if found:
+				return buttons, True  # Stop searching other branches
+		return buttons, False
+
+	def _collectTexts(self, obj, min_length=20):
+		"""Collect STATICTEXT content recursively."""
+		texts = []
+		try:
+			role = _role(obj)
+			if role is None:
+				return texts
+			if role == controlTypes.Role.STATICTEXT:
+				name = getattr(obj, "name", "") or ""
+				if name:
+					clean = name.strip()
+					if clean and not clean.startswith("00:") and len(clean) > min_length:
+						texts.append(clean)
+			value = getattr(obj, "value", "") or ""
+			if value:
+				clean_v = str(value).strip()
+				if len(clean_v) > min_length:
+					texts.append(clean_v)
+			for child in getattr(obj, "children", []):
+				texts.extend(self._collectTexts(child, min_length))
+		except Exception:
+			pass
+		return texts
+
+	def _findCollapsed(self, obj):
+		"""Find button with COLLAPSED state (512) recursively."""
+		try:
+			role = _role(obj)
+			if role is None:
+				return None
+			if role == controlTypes.Role.BUTTON:
+				states = getattr(obj, "states", set())
+				if 512 in states:
+					return obj
+			for child in getattr(obj, "children", []):
+				result = self._findCollapsed(child)
+				if result:
+					return result
+		except Exception:
+			pass
+		return None
+
+	def _findFirstButton(self, obj):
+		"""Find first button recursively."""
+		if _role(obj) == controlTypes.Role.BUTTON:
+			return obj
+		for child in getattr(obj, "children", []):
+			result = self._findFirstButton(child)
+			if result:
+				return result
+		return None
+
+	def _findFirstCell(self, obj, depth=0, max_depth=3):
+		"""Find first table cell recursively."""
+		if depth > max_depth:
+			return None
+		if _role(obj) == controlTypes.Role.TABLECELL:
+			return obj
+		for child in getattr(obj, "children", []):
+			result = self._findFirstCell(child, depth + 1, max_depth)
+			if result:
+				return result
+		return None
+
 	@scriptHandler.script(
 		description=_("Copy current message to clipboard"),
 		gesture="kb:control+c"
 	)
 	def script_copyMessage(self, gesture):
 		"""Copy current message to clipboard."""
-		# Define helper function ONCE for performance
-		all_text_parts = []
-
-		def collect_texts(o):
-			nonlocal all_text_parts
-			try:
-				role = _role(o)
-				if role is None:
-					return
-				if role == controlTypes.Role.STATICTEXT:
-					name = getattr(o, "name", "") or ""
-					if name:
-						clean = name.strip()
-						# Filter out non-content labels
-						if clean and not clean.startswith("00:") and len(clean) > 20:
-							all_text_parts.append(clean)
-				value = getattr(o, "value", "") or ""
-				if value:
-					clean_v = str(value).strip()
-					if len(clean_v) > 20:
-						all_text_parts.append(clean_v)
-				children = getattr(o, "children", []) or []
-				for child in children:
-					collect_texts(child)
-			except Exception:
-				pass
-
 		obj = api.getFocusObject()
 		role_val = _role(obj)
 
 		# Check if focused on a message (LISTITEM or SECTION with name)
 		if (role_val == controlTypes.Role.LISTITEM or role_val == 86) and obj.name:
-			parent = getattr(obj, "parent", None)
-			if parent:
-				siblings = getattr(parent, "children", []) or []
-
-				# Collect all text parts
-				all_text_parts = []
-				for sibling in siblings:
-					collect_texts(sibling)
-
-				# Combine all text parts
-				full_text = "\r\n".join(all_text_parts)
-
-				# If found text, copy it
-				if full_text and len(full_text) > 50:
-					api.copyToClip(full_text)
-					ui.message(_("Copied"))
-					return
+			# Try to get formatted text first
+			text, error = self._getMessageText(require_expanded=False)
+			if text:
+				api.copyToClip(text)
+				ui.message(_("Copied"))
+				return
 
 			# Fallback: use obj.name with filters
 			text = obj.name.strip()
@@ -357,45 +425,6 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_playAudio(self, gesture):
 		"""Enter: Clicks play button (button before slider) without moving focus."""
-		# Define functions ONCE outside loop for performance
-		slider_obj = None
-		all_buttons = []
-
-		def find_slider(obj):
-			"""Find slider object (no depth limit)."""
-			nonlocal slider_obj
-			try:
-				role = _role(obj)
-				if role is None:
-					return
-				# Check for SLIDER or PROGRESSBAR
-				if role == controlTypes.Role.SLIDER or role == controlTypes.Role.PROGRESSBAR:
-					slider_obj = obj
-					return
-				# Continue searching in children
-				for child in getattr(obj, "children", []):
-					find_slider(child)
-			except Exception:
-				pass
-
-		def collect_buttons_until_slider(obj):
-			"""Collect all buttons in order."""
-			nonlocal all_buttons
-			try:
-				# Stop if we reached the slider
-				if obj is slider_obj:
-					return True
-				role = _role(obj)
-				if role == controlTypes.Role.BUTTON:
-					all_buttons.append(obj)
-				# Continue searching in children
-				for child in getattr(obj, "children", []):
-					if collect_buttons_until_slider(child):
-						return True
-			except Exception:
-				pass
-			return False
-
 		try:
 			# Only works in message list
 			if not self._isMessageListFocus():
@@ -417,11 +446,9 @@ class AppModule(appModuleHandler.AppModule):
 			# Audio: search for slider and click button before it
 			siblings = getattr(parent, "children", []) or []
 			for sibling in siblings:
-				slider_obj = None
-				all_buttons = []
-				find_slider(sibling)
+				slider_obj = self._findSlider(sibling)
 				if slider_obj:
-					collect_buttons_until_slider(sibling)
+					all_buttons, _ = self._collectButtonsUntil(sibling, slider_obj)
 					if all_buttons:
 						all_buttons[-1].doAction()
 						return
@@ -432,6 +459,84 @@ class AppModule(appModuleHandler.AppModule):
 		except Exception:
 			ui.message(_("No audio message found"))
 
+	def _getMessageText(self, require_expanded=True):
+		"""
+		Get formatted message text from current focused message.
+		Returns (text, error_message) tuple.
+		If error_message is None, text was retrieved successfully.
+		"""
+		# Validation
+		if not self._isMessageListFocus():
+			return None, _("Not in message list")
+
+		focus = api.getFocusObject()
+		focus_name = getattr(focus, "name", "") or ""
+
+		if "…" not in focus_name:
+			return None, _("Not a text message")
+
+		parent = getattr(focus, "parent", None)
+		if not parent:
+			return None, _("No message found")
+
+		siblings = getattr(parent, "children", []) or []
+
+		# Collect text parts
+		all_text_parts = []
+		for sibling in siblings:
+			all_text_parts.extend(self._collectTexts(sibling, 20))
+
+		existing_text = " ".join(all_text_parts)
+
+		# If text already complete, return it
+		if len(existing_text) > 800:
+			return existing_text, None
+
+		# Need to expand "read more"
+		if not require_expanded:
+			return existing_text, None
+
+		# Find and click "read more" button
+		for sibling in siblings:
+			collapsed_obj = self._findCollapsed(sibling)
+			if collapsed_obj:
+				all_buttons, _ = self._collectButtonsUntil(sibling, collapsed_obj)
+
+				focusable_buttons = []
+				for btn in all_buttons:
+					states = getattr(btn, "states", set())
+					if 16777216 in states:
+						focusable_buttons.append(btn)
+
+				if len(focusable_buttons) >= 2:
+					read_more_btn = focusable_buttons[1]
+				elif len(focusable_buttons) == 1:
+					read_more_btn = focusable_buttons[0]
+				else:
+					continue
+
+				# Click and wait for expansion
+				read_more_btn.doAction()
+				wx.CallLater(50, speech.cancelSpeech)
+
+				# Re-fetch text after expansion
+				all_text_parts = []
+				try:
+					updated_siblings = getattr(parent, "children", []) or []
+					for sib in updated_siblings:
+						all_text_parts.extend(self._collectTexts(sib, 20))
+				except Exception:
+					pass
+
+				full_text = "\r\n".join(all_text_parts)
+
+				if full_text and len(full_text) > 300:
+					return full_text, None
+				else:
+					return None, _("Text not found")
+
+		return None, _("Text not found")
+
 	@scriptHandler.script(
 		# Translators: Read complete message (click "read more" and speak text)
 		description=_("Read complete message (clicks 'read more' button)"),
@@ -439,166 +544,31 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_readCompleteMessage(self, gesture):
 		"""Control+R: Reads complete message (clicks 'read more' if needed)."""
-		# Define helper functions ONCE for performance
-		all_text_parts = []
-		collapsed_obj = None
-		all_buttons = []
-
-		def collect_texts(obj):
-			nonlocal all_text_parts
-			try:
-				role = _role(obj)
-				if role is None:
-					return
-				if role == controlTypes.Role.STATICTEXT:
-					name = getattr(obj, "name", "") or ""
-					if name:
-						clean = name.strip()
-						# Filter out non-content labels
-						if clean and not clean.startswith("00:") and len(clean) > 20:
-							all_text_parts.append(clean)
-				value = getattr(obj, "value", "") or ""
-				if value:
-					clean_v = str(value).strip()
-					if len(clean_v) > 20:
-						all_text_parts.append(clean_v)
-				children = getattr(obj, "children", []) or []
-				for child in children:
-					collect_texts(child)
-			except Exception:
-				pass
-
-		def find_collapsed(obj):
-			nonlocal collapsed_obj
-			try:
-				role = _role(obj)
-				if role is None:
-					return
-				# Check for BUTTON with COLLAPSED state (512)
-				if role == controlTypes.Role.BUTTON:
-					states = getattr(obj, "states", set())
-					if 512 in states:
-						collapsed_obj = obj
-						return
-				# Continue searching in children
-				for child in getattr(obj, "children", []):
-					find_collapsed(child)
-			except Exception:
-				pass
-
-		def collect_buttons_until_collapsed(obj):
-			nonlocal all_buttons
-			try:
-				# Stop if we reached the COLLAPSED button
-				if obj is collapsed_obj:
-					return True
-				role = _role(obj)
-				if role == controlTypes.Role.BUTTON:
-					all_buttons.append(obj)
-				# Continue searching in children
-				for child in getattr(obj, "children", []):
-					if collect_buttons_until_collapsed(child):
-						return True
-			except Exception:
-				pass
-			return False
-
-		try:
-			# Only works in message list
-			if not self._isMessageListFocus():
+		text, error = self._getMessageText(require_expanded=True)
+		if error:
+			ui.message(error)
+			if error == _("Not in message list"):
 				gesture.send()
-				return
-
-			focus = api.getFocusObject()
-
-			# Check if this is a text message by looking for "…" in the name
-			# Text messages contain "…" while voice messages, images, etc. don't
-			focus_name = getattr(focus, "name", "") or ""
-			if "…" not in focus_name:
-				# Not a text message
-				ui.message(_("Not a text message"))
+			elif error == _("Not a text message"):
 				gesture.send()
-				return
+		else:
+			ui.message(text)
 
-			parent = getattr(focus, "parent", None)
-			if not parent:
-				ui.message(_("No message found"))
-				return
-
-			siblings = getattr(parent, "children", []) or []
-
-			# FIRST: Check if complete text already exists by collecting all parts
-			all_text_parts = []
-			for sibling in siblings:
-				collect_texts(sibling)
-
-			# Combine all text parts
-			existing_text = " ".join(all_text_parts)
-
-			# If complete text already exists (> 800 chars), read it and done
-			if len(existing_text) > 800:
-				ui.message(existing_text)
-				return
-
-			# SECOND: Complete text not found, search for "read more" button
-			for sibling in siblings:
-				collapsed_obj = None
-				find_collapsed(sibling)
-
-				# If found COLLAPSED button, collect all buttons until it
-				if collapsed_obj:
-					all_buttons = []
-					collect_buttons_until_collapsed(sibling)
-
-					# Filter only FOCUSABLE buttons (16777216)
-					focusable_buttons = []
-					for btn in all_buttons:
-						states = getattr(btn, "states", set())
-						if 16777216 in states:  # FOCUSABLE
-							focusable_buttons.append(btn)
-
-					# "Ler mais" is usually the SECOND focusable button
-					# If only 1 focusable, use it
-					if len(focusable_buttons) >= 2:
-						read_more_btn = focusable_buttons[1]
-					elif len(focusable_buttons) == 1:
-						read_more_btn = focusable_buttons[0]
-					else:
-						continue  # No focusable buttons, try next sibling
-
-					# Click the "read more" button
-					read_more_btn.doAction()
-					# Cancel speech immediately after click to stop any announcement
-					wx.CallLater(50, speech.cancelSpeech)
-					# Wait for text to load, then speak
-					# Store parent reference to re-fetch siblings after expansion
-					message_parent = parent
-
-					def speak_after_click():
-						# Re-fetch siblings from parent after text expansion
-						nonlocal all_text_parts
-						all_text_parts = []
-						try:
-							updated_siblings = getattr(message_parent, "children", []) or []
-							for sib in updated_siblings:
-								collect_texts(sib)
-						except Exception:
-							pass
-
-						# Combine all text parts
-						full_text = "\r\n".join(all_text_parts)
-
-						# Check if we found expanded text
-						if full_text and len(full_text) > 300:
-							ui.message(full_text)
-						else:
-							ui.message(_("Text not found"))
-
-					wx.CallLater(100, speak_after_click)
-					return  # Done!
-
-		except Exception:
-			gesture.send()
+	@scriptHandler.script(
+		description=_("Read complete message in browse mode"),
+		gesture="kb:alt+enter"
+	)
+	def script_readCompleteMessageBrowse(self, gesture):
+		"""Alt+Enter: Read complete message in browse mode."""
+		text, error = self._getMessageText(require_expanded=True)
+		if error:
+			ui.message(error)
+			if error == _("Not in message list"):
+				gesture.send()
+			elif error == _("Not a text message"):
+				gesture.send()
+		else:
+			ui.browseableMessage(text)
 
 	@scriptHandler.script(
 		description=_("Open context menu"),
@@ -606,15 +576,6 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_contextMenu(self, gesture):
 		"""Shift+Enter: Opens message context menu without moving focus."""
-		# Define helper function ONCE for performance
-		def find_buttons(obj):
-			buttons = []
-			if _role(obj) == controlTypes.Role.BUTTON:
-				buttons.append(obj)
-			for child in getattr(obj, "children", []):
-				buttons.extend(find_buttons(child))
-			return buttons
-
 		try:
 			# Only works in message list
 			if not self._isMessageListFocus():
@@ -631,7 +592,7 @@ class AppModule(appModuleHandler.AppModule):
 			siblings = getattr(parent, "children", [])
 
 			for sibling in siblings:
-				buttons = find_buttons(sibling)
+				buttons = self._findButtons(sibling)
 				if not buttons:
 					continue
 
@@ -714,7 +675,6 @@ class AppModule(appModuleHandler.AppModule):
 
 						obj.setFocus()
 
-						# Cacheia path se usou container
 						if root is container:
 							self._composer_path = path_indices
 
@@ -753,7 +713,6 @@ class AppModule(appModuleHandler.AppModule):
 				# Force Focus Mode when entering WhatsApp
 				if obj.treeInterceptor:
 					obj.treeInterceptor.passThrough = True
-				# REMOVIDO: Auto-recache causava recacheamento constante
 		except Exception:
 			pass
 		nextHandler()
@@ -772,6 +731,16 @@ class AppModule(appModuleHandler.AppModule):
 		except Exception:
 			return
 
+		# CRITICAL: Only process objects from this instance's process
+		# NVDA creates multiple instances for multi-process apps like Electron
+		# This instance should only handle events from its own processID
+		try:
+			obj_process_id = getattr(obj, "processID", None)
+			if obj_process_id is not None and obj_process_id != self.processID:
+				return
+		except Exception:
+			pass
+
 		# Quick exit: no name or empty name
 		if not obj.name:
 			return
@@ -779,7 +748,7 @@ class AppModule(appModuleHandler.AppModule):
 		name = obj.name
 		name_len = len(name)
 
-		# Early exit: Nome muito curto não pode ter telefone válido
+		# Early exit: name too short to have valid phone number
 		if name_len < 12 and not name.startswith('Talvez '):
 			return
 
@@ -812,12 +781,12 @@ class AppModule(appModuleHandler.AppModule):
 				has_table_ancestor = self._hasTableInAncestors(obj)
 
 				if has_table_ancestor:
-					# Lista de conversas: usar filter_chat
+					# Conversation list: use filter_chat
 					if filter_chat:
 						obj.name = PHONE_RE.sub("", name)
 						filtered = True
 				else:
-					# Lista de mensagens: usar filter_msg
+					# Message list: use filter_msg
 					if filter_msg:
 						obj.name = PHONE_RE.sub("", name)
 						filtered = True
@@ -888,21 +857,11 @@ class AppModule(appModuleHandler.AppModule):
 	def _isVideoMessage(self, parent):
 		"""Check if message is a video by checking first button name for duration pattern."""
 		try:
-			# Recursive search for buttons (same logic as Shift+Enter)
-			def find_buttons(obj):
-				"""Find all buttons recursively (no depth limit)."""
-				buttons = []
-				if _role(obj) == controlTypes.Role.BUTTON:
-					buttons.append(obj)
-				for child in getattr(obj, "children", []):
-					buttons.extend(find_buttons(child))
-				return buttons
-
 			# Get all children of parent and search for buttons
 			children = getattr(parent, "children", []) or []
 			all_buttons = []
 			for child in children:
-				all_buttons.extend(find_buttons(child))
+				all_buttons.extend(self._findButtons(child))
 
 			if not all_buttons:
 				return False
@@ -922,20 +881,9 @@ class AppModule(appModuleHandler.AppModule):
 			if not parent:
 				return
 
-			# Recursive search for first button (same logic as Shift+Enter)
-			def find_first_button(obj):
-				"""Find first button recursively."""
-				if _role(obj) == controlTypes.Role.BUTTON:
-					return obj
-				for child in getattr(obj, "children", []):
-					result = find_first_button(child)
-					if result:
-						return result
-				return None
-
 			# Search in all children
 			for child in getattr(parent, "children", []):
-				button = find_first_button(child)
+				button = self._findFirstButton(child)
 				if button:
 					button.doAction()
 					return
@@ -948,21 +896,6 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_goToConversationList(self, gesture):
 		"""Alt+1: Go to WhatsApp conversation list."""
-		# Define helper function ONCE for performance
-		def find_first_cell(o, depth=0):
-			if depth > 3:
-				return None
-			try:
-				if _role(o) == 29:
-					return o
-				for c in getattr(o, "children", []):
-					f = find_first_cell(c, depth + 1)
-					if f:
-						return f
-			except:
-				pass
-			return None
-
 		self._toggling = True
 		# Store original passThrough state
 		orig_pass_through = None
@@ -1020,7 +953,7 @@ class AppModule(appModuleHandler.AppModule):
 							self._getConversationListPrefix(container)
 						self._setConversationListContainer(obj)
 
-						cell = find_first_cell(obj)
+						cell = self._findFirstCell(obj)
 						if cell:
 							self._setConversationListCell(cell)
 							cell.setFocus()
@@ -1176,6 +1109,7 @@ class AppModule(appModuleHandler.AppModule):
 			new_val = not current
 			config.conf[CONFIG_SECTION]["filterMessageList"] = new_val
 			config.conf.save()
+			self._config_cache['filterMessageList'] = new_val  # Update cache
 
 			if new_val:
 				ui.message(_("Message list: phone numbers hidden"))
@@ -1200,6 +1134,7 @@ class AppModule(appModuleHandler.AppModule):
 		new_val = not current
 		config.conf[CONFIG_SECTION]["autoFocusMode"] = new_val
 		config.conf.save()
+		self._config_cache['autoFocusMode'] = new_val  # Update cache
 
 		if new_val:
 			ui.message(_("Auto Focus Mode: enabled"))
