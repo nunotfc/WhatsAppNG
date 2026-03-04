@@ -520,7 +520,7 @@ class AppModule(appModuleHandler.AppModule):
 
 				# Click and wait for expansion
 				read_more_btn.doAction()
-				wx.CallLater(50, speech.cancelSpeech)
+				wx.CallLater(100, lambda: None)  # Wait for expansion
 
 				# Re-fetch text after expansion
 				all_text_parts = []
@@ -547,15 +547,83 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_readCompleteMessage(self, gesture):
 		"""Control+R: Reads complete message (clicks 'read more' if needed)."""
-		text, error = self._getMessageText(require_expanded=True)
-		if error:
-			ui.message(error)
-			if error == _("Not in message list"):
-				gesture.send()
-			elif error == _("Not a text message"):
-				gesture.send()
-		else:
-			ui.message(text)
+		# Validation
+		if not self._isMessageListFocus():
+			gesture.send()
+			return
+
+		focus = api.getFocusObject()
+		focus_name = getattr(focus, "name", "") or ""
+
+		if "…" not in focus_name:
+			ui.message(_("Not a text message"))
+			gesture.send()
+			return
+
+		parent = getattr(focus, "parent", None)
+		if not parent:
+			ui.message(_("No message found"))
+			return
+
+		siblings = getattr(parent, "children", []) or []
+
+		# Collect existing text
+		all_text_parts = []
+		for sibling in siblings:
+			all_text_parts.extend(self._collectTexts(sibling, 20))
+
+		existing_text = " ".join(all_text_parts)
+
+		# If text already complete, read it
+		if len(existing_text) > 800:
+			ui.message(existing_text)
+			return
+
+		# Need to expand "read more" - find and click button
+		for sibling in siblings:
+			collapsed_obj = self._findCollapsed(sibling)
+			if collapsed_obj:
+				all_buttons, _found = self._collectButtonsUntil(sibling, collapsed_obj)
+
+				focusable_buttons = []
+				for btn in all_buttons:
+					states = getattr(btn, "states", set())
+					if 16777216 in states:
+						focusable_buttons.append(btn)
+
+				if len(focusable_buttons) >= 2:
+					read_more_btn = focusable_buttons[1]
+				elif len(focusable_buttons) == 1:
+					read_more_btn = focusable_buttons[0]
+				else:
+					continue
+
+				# Click and then speak after expansion
+				read_more_btn.doAction()
+				message_parent = parent
+
+				def speak_after_click():
+					speech.cancelSpeech()  # Cancel any speech before reading expanded text
+					nonlocal all_text_parts
+					all_text_parts = []
+					try:
+						updated_siblings = getattr(message_parent, "children", []) or []
+						for sib in updated_siblings:
+							all_text_parts.extend(self._collectTexts(sib, 20))
+					except Exception:
+						pass
+
+					full_text = "\r\n".join(all_text_parts)
+
+					if full_text and len(full_text) > 300:
+						ui.message(full_text)
+					else:
+						ui.message(_("Text not found"))
+
+				wx.CallLater(150, speak_after_click)
+				return
+
+		ui.message(_("Text not found"))
 
 	@scriptHandler.script(
 		description=_("Read complete message in browse mode"),
