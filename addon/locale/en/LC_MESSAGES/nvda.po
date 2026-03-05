@@ -103,6 +103,16 @@ msgstr "Go to WhatsApp message list"
 msgid "Message list not found"
 msgstr "Message list not found"
 
+#. Not in message list
+#: addon\appModules\whatsapp_root.py:473
+msgid "Not in message list"
+msgstr "Not in message list"
+
+#. Translators: Alt+Enter: Read complete message in browse mode
+#: addon\appModules\whatsapp_root.py:629
+msgid "Read complete message in browse mode"
+msgstr "Read complete message in browse mode"
+
 #: addon\appModules\whatsapp_root.py:1106
 msgid "Toggle phone number filtering in conversation list"
 msgstr "Toggle phone number filtering in conversation list"

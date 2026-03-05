@@ -105,6 +105,16 @@ msgstr "الإنتقال إلى قائمة رسائل WhatsApp"
 msgid "Message list not found"
 msgstr "لم يتم العثور على قائمة الرسائل"
 
+#. Not in message list
+#: addon\appModules\whatsapp_root.py:473
+msgid "Not in message list"
+msgstr "ليس في قائمة الرسائل"
+
+#. Translators: Alt+Enter: Read complete message in browse mode
+#: addon\appModules\whatsapp_root.py:629
+msgid "Read complete message in browse mode"
+msgstr "قراءة الرسالة الكاملة في وضع التصفح"
+
 #: addon\appModules\whatsapp_root.py:1106
 msgid "Toggle phone number filtering in conversation list"
 msgstr "تفعيل/تعطيل تصفية أرقام الهواتف في قائمة المحادثات"

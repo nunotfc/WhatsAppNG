@@ -104,6 +104,16 @@ msgstr "WhatsApp mesaj listesine git"
 msgid "Message list not found"
 msgstr "Mesaj listesi bulunamadı"
 
+#. Not in message list
+#: addon\appModules\whatsapp_root.py:473
+msgid "Not in message list"
+msgstr "Mesaj listesinde değil"
+
+#. Translators: Alt+Enter: Read complete message in browse mode
+#: addon\appModules\whatsapp_root.py:629
+msgid "Read complete message in browse mode"
+msgstr "Tamamı modunda mesajı oku"
+
 #: addon\appModules\whatsapp_root.py:1106
 msgid "Toggle phone number filtering in conversation list"
 msgstr "Konuşma listesinde telefon numarası filtrelemesini değiştirir"
