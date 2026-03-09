@@ -87,6 +87,21 @@ Konfigurieren Sie Tastenkürzel unter:
 
 ## Änderungsprotokoll
 
+### Version 1.5.0 (2026-03-05)
+
+**Hinzugefügt:**
+- Strg+Umschalt+Enter: Auf Nachricht reagieren (öffnet Reaktionsmenü)
+- Alt+Enter: Vollständige Nachricht im Browsermodus lesen
+- Native WhatsApp-Desktop-Tastaturkürzel zur Dokumentation hinzugefügt
+
+**Geändert:**
+- Leistung erheblich optimiert: Navigation ist nun flüssiger und reaktiver
+- Alt+2 zuverlässiger und präziser in der Navigation
+- Strg+C funktioniert jetzt nur in der Nachrichtenliste
+
+**Behoben:**
+- Strg+R liest nun den vollständigen Text korrekt beim Erweitern langer Nachrichten
+
 ### Version 1.4.0 (2026-02-23)
 
 **Hinzugefügt:**

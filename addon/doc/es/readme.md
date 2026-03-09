@@ -87,6 +87,21 @@ Configura los atajos en:
 
 ## Historial de cambios
 
+### Versión 1.5.0 (2026-03-05)
+
+**Añadido:**
+- Control+Shift+Enter: Reaccionar a mensajes (abre menú de reacciones)
+- Alt+Enter: Leer mensaje completo en modo exploración
+- Atajos de teclado nativos de WhatsApp Desktop añadidos a la documentación
+
+**Cambiado:**
+- Rendimiento significativamente optimizado: La navegación ahora es más fluida y responsiva
+- Alt+2 más confiable y preciso en navegación
+- Control+C ahora solo funciona en la lista de mensajes
+
+**Corregido:**
+- Control+R ahora lee el texto completo correctamente al expandir mensajes largos
+
 ### Versión 1.4.0 (2026-02-23)
 
 **Añadido:**

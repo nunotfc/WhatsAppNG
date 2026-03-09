@@ -87,6 +87,21 @@ Configura i tasti rapidi in:
 
 ## Cronologia delle modifiche
 
+### Versione 1.5.0 (2026-03-05)
+
+**Aggiunto:**
+- Ctrl+Shift+Invio: Reagisci al messaggio (apre menu reazioni)
+- Alt+Invio: Leggi messaggio completo in modalità navigazione
+- Scorciatoie da tastiera nativi WhatsApp Desktop aggiunti alla documentazione
+
+**Cambiato:**
+- Prestazioni significativamente ottimizzate: La navigazione è ora più fluida e reattiva
+- Alt+2 più affidabile e preciso nella navigazione
+- Ctrl+C ora funziona solo nella lista messaggi
+
+**Corretto:**
+- Ctrl+R ora legge il testo correttamente quando espande messaggi lunghi
+
 ### Versione 1.4.0 (2026-02-23)
 
 **Aggiunto:**

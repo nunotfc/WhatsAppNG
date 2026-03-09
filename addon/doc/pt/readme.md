@@ -87,6 +87,21 @@ Configure os atalhos em:
 
 ## Registro de Alterações
 
+### Versão 1.5.0 (2026-03-05)
+
+**Adicionado:**
+- Control+Shift+Enter: Reagir a mensagens (abre menu de reações)
+- Alt+Enter: Ler mensagem completa em janela de navegação
+- Atalhos de teclado nativos do WhatsApp Desktop adicionados à documentação
+
+**Alterado:**
+- Performance significativamente otimizada: Navegação agora mais fluida e responsiva
+- Alt+2 mais confiável e preciso na navegação
+- Control+C agora só funciona na lista de mensagens
+
+**Corrigido:**
+- Control+R agora lê texto completo corretamente ao expandir mensagens longas
+
 ### Versão 1.4.0 (2026-02-23)
 
 **Adicionado:**

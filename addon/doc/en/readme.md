@@ -87,6 +87,21 @@ Configure shortcuts in:
 
 ## Changelog
 
+### Version 1.5.0 (2026-03-05)
+
+**Added:**
+- Control+Shift+Enter: React to messages (opens reaction menu)
+- Alt+Enter: Read complete message in browse mode window
+- Native WhatsApp Desktop keyboard shortcuts added to documentation
+
+**Changed:**
+- Performance significantly optimized: Navigation is now more fluid and responsive
+- Alt+2 more reliable and precise in navigation
+- Control+C now only works in message list
+
+**Fixed:**
+- Control+R now reads complete text correctly when expanding long messages
+
 ### Version 1.4.0 (2026-02-23)
 
 **Added:**

@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-03-05
+
+### Added
+- **Control+Shift+Enter**: React to messages (opens reaction menu)
+- **Alt+Enter**: Read complete message in browse mode window
+- **Native shortcuts documentation**: All WhatsApp Desktop keyboard shortcuts added to documentation
+
+### Changed
+- **Performance significantly optimized**: Navigation is now more fluid and responsive
+  - Faster response time for all keyboard shortcuts
+  - Code internally optimized - reduced by over 100 lines for better efficiency
+- **Alt+2** more reliable and precise in navigation
+- **Control+C** now only works in message list
+
+### Fixed
+- **Control+R**: Now reads complete text correctly when expanding long messages
+
 ## [1.4.0] - 2026-02-23
 
 ### Added

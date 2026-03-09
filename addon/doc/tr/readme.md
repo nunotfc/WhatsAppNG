@@ -88,6 +88,21 @@ Kısayolları şuradan yapılandırın:
 
 ## Değişiklik Günlüğü
 
+### Sürüm 1.5.0 (2026-03-05)
+
+**Eklenen:**
+- Ctrl+Shift+Enter: Mesaja tepki ver (reaksiyon menüsünü açar)
+- Alt+Enter: Tamamı modunda tam mesajı oku
+- WhatsApp Masaüstü yerel klavye kısayolları belgelere eklendi
+
+**Değiştirildi:**
+- Performans önemli ölçüde optimize edildi: Navigasyon artık daha akıcı ve duyarlı
+- Alt+2 navigasyonda daha güvenilir ve hassas
+- Ctrl+C artık sadece mesaj listesinde çalışıyor
+
+**Düzeltildi:**
+- Ctrl+R artık uzun mesajları genişletirken tam metni doğru okuyor
+
 ### Sürüm 1.4.0 (2026-02-23)
 
 **Eklenenler:**
