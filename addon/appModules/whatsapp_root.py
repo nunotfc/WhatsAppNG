@@ -377,12 +377,15 @@ class AppModule(appModuleHandler.AppModule):
 		"""Find first table cell recursively."""
 		if depth > max_depth:
 			return None
-		if _role(obj) == controlTypes.Role.TABLECELL:
-			return obj
-		for child in getattr(obj, "children", []):
-			result = self._findFirstCell(child, depth + 1, max_depth)
-			if result:
-				return result
+		try:
+			if _role(obj) == controlTypes.Role.TABLECELL:
+				return obj
+			for child in getattr(obj, "children", []):
+				result = self._findFirstCell(child, depth + 1, max_depth)
+				if result:
+					return result
+		except Exception:
+			pass
 		return None
 
 	@scriptHandler.script(
@@ -396,25 +399,33 @@ class AppModule(appModuleHandler.AppModule):
 			gesture.send()
 			return
 
-		obj = api.getFocusObject()
+		focus = api.getFocusObject()
+		focus_name = getattr(focus, "name", "") or ""
 
-		if obj.name:
-			# Try to get formatted text first
-			text, error = self._getMessageText(require_expanded=False)
-			if text:
-				api.copyToClip(text)
-				ui.message(_("Copied"))
-				return
+		if not focus_name:
+			gesture.send()
+			return
 
-			# Fallback: use obj.name with filters
-			text = obj.name.strip()
-			text = re.sub(r'\s*secção$', '', text, flags=re.IGNORECASE)
-			text = re.sub(r'\s*list\s*item$', '', text, flags=re.IGNORECASE)
-			text = re.sub(r'\s*\d+\s*de\s*\d+$', '', text)
-			text = re.sub(r'\s*$', '', text)
+		# Try to get expanded text first (if there's "read more")
+		text, error = self._getMessageText(require_expanded=False)
 
-			if text.strip():
-				api.copyToClip(text)
+		if text:
+			api.copyToClip(text)
+			ui.message(_("Copied"))
+			return
+
+		# Fallback: collect text from siblings (same as Alt+Enter)
+		parent = getattr(focus, "parent", None)
+		if parent:
+			siblings = getattr(parent, "children", []) or []
+			all_text_parts = []
+			for sibling in siblings:
+				all_text_parts.extend(self._collectTexts(sibling, 20))
+
+			existing_text = " ".join(all_text_parts)
+
+			if existing_text.strip():
+				api.copyToClip(existing_text)
 				ui.message(_("Copied"))
 				return
 
@@ -631,15 +642,51 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_readCompleteMessageBrowse(self, gesture):
 		"""Alt+Enter: Read complete message in browse mode."""
+		# Validation
+		if not self._isMessageListFocus():
+			gesture.send()
+			return
+
+		focus = api.getFocusObject()
+		focus_name = getattr(focus, "name", "") or ""
+
+		if not focus_name:
+			gesture.send()
+			return
+
+		# Try to get expanded text first (if there's "read more")
 		text, error = self._getMessageText(require_expanded=True)
-		if error:
-			ui.message(error)
-			if error == _("Not in message list"):
-				gesture.send()
-			elif error == _("Not a text message"):
-				gesture.send()
-		else:
+
+		if not error and text:
+			# Successfully got expanded text
 			ui.browseableMessage(text)
+		else:
+			# Fallback: show current message text (even if short or no "read more")
+			parent = getattr(focus, "parent", None)
+			if parent:
+				siblings = getattr(parent, "children", []) or []
+				all_text_parts = []
+				for sibling in siblings:
+					all_text_parts.extend(self._collectTexts(sibling, 20))
+
+				existing_text = " ".join(all_text_parts)
+
+				if existing_text.strip():
+					ui.browseableMessage(existing_text)
+				else:
+					# Last resort: use obj.name with filters (same as Ctrl+C)
+					text = focus_name.strip()
+					text = re.sub(r'\s*secção$', '', text, flags=re.IGNORECASE)
+					text = re.sub(r'\s*list\s*item$', '', text, flags=re.IGNORECASE)
+					text = re.sub(r'\s*\d+\s*de\s*\d+$', '', text)
+					text = re.sub(r'\s*$', '', text)
+
+					if text.strip():
+						ui.browseableMessage(text)
+					else:
+						gesture.send()
+			else:
+				gesture.send()
 
 	@scriptHandler.script(
 		description=_("Open context menu"),
