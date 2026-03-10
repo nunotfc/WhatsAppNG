@@ -11,12 +11,58 @@ NVDA add-on that provides accessibility enhancements for the web-based WhatsApp 
 - **Shift+Enter**: Open message context menu
 - **Control+C**: Copy current message to clipboard
 - **Control+R**: Read complete message (clicks "read more" button if needed)
+- **Control+Shift+Enter**: React to message
 
 ### Toggle Scripts (no default shortcut - configure in Input Gestures)
 
 - Toggle phone number filtering in conversation list
 - Toggle phone number filtering in message list
 - Toggle automatic Focus Mode (allows Browse Mode when needed)
+
+## Native WhatsApp Desktop keyboard shortcuts
+
+- Mark as unread: Ctrl+Shift+U
+- Mute notifications: Ctrl+Shift+M
+- Archive chat: Ctrl+Shift+A
+- Pin chat: Ctrl+Alt+Shift+P
+- Search: Ctrl+Alt+/
+- Search in conversation: Ctrl+Shift+F
+- New chat: Ctrl+Alt+N
+- Next chat: Ctrl+]
+- Previous chat: Ctrl+[
+- Add label to chat: Ctrl+Cmd+Shift+L
+- Close chat: Escape
+- New group: Ctrl+Shift+N
+- Profile and About: Ctrl+Alt+P
+- Increase selected voice message speed: Shift+.
+- Decrease selected voice message speed: Shift+,
+- Settings: Alt+S
+- Emoji panel: Ctrl+Alt+E
+- GIF panel: Ctrl+Alt+G
+- Sticker panel: Ctrl+Alt+S
+- Extended search: Alt+K
+- Lock app: Alt+L
+- Open chat details: Alt+I
+- Block chat: Ctrl+Shift+B
+- Reply: Alt+R
+- Reply privately: Ctrl+Alt+R
+- Forward: Ctrl+Alt+D
+- Star message: Alt+8
+- Open attachment dropdown menu: Alt+A
+- Start PTT recording: Ctrl+Alt+Shift+R
+- Pause PTT recording: Alt+P
+- Send PTT: Ctrl+Enter
+- Edit last message: Ctrl+Arrow Up
+- Toggle camera: Ctrl+Alt+V
+- Mute/Unmute: Ctrl+Alt+M
+- Reactions: Ctrl+Alt+R
+- Raise hand: Ctrl+Alt+H
+- Share screen: Ctrl+Alt+S
+- End call: Ctrl+Alt+W
+- Zoom in: Ctrl++
+- Zoom out: Ctrl+-
+- Reset zoom: Ctrl+0
+- Open chat: Ctrl+1..9
 
 ## Requirements
 
@@ -39,6 +85,87 @@ Phone number filters can be toggled:
 Configure shortcuts in:
 **NVDA menu → Preferences → Input Gestures → WhatsApp NG**
 
+## Changelog
+
+### Version 1.5.0 (2026-03-05)
+
+**Added:**
+- Control+Shift+Enter: React to messages (opens reaction menu)
+- Alt+Enter: Read complete message in browse mode window
+- Native WhatsApp Desktop keyboard shortcuts added to documentation
+
+**Changed:**
+- Performance significantly optimized: Navigation is now more fluid and responsive
+- Alt+2 more reliable and precise in navigation
+- Control+C now only works in message list
+
+**Fixed:**
+- Control+R now reads complete text correctly when expanding long messages
+
+### Version 1.4.0 (2026-02-23)
+
+**Added:**
+- Full language support: Arabic, German, Spanish, Italian, and Russian
+- Ukrainian translation updated with latest strings
+
+**Fixed:**
+- "Text not found" error in Control+R after clicking "read more" button
+- Control+R now works only on text messages (shows "Not a text message" for voice/images)
+
+**Changed:**
+- Repository links updated to new repository (nunotfc/WhatsAppNG)
+- Documentation: All localized READMEs now include complete changelog through version 1.3.0
+
+### Version 1.3.0 (2026-02-07)
+
+**Added:**
+- Turkish translation support
+- Toggle automatic Focus Mode option (configure gesture in Input Gestures)
+
+**Changed:**
+- Improved performance: Navigation commands are now faster on repeated use
+- Escape key now passes through to WhatsApp correctly
+
+**Fixed:**
+- Enter now plays video messages (previously only worked for audio)
+
+### Version 1.1.1 (2025-01-31)
+
+**Added:**
+- Control+R: Read complete message (clicks "read more" button automatically)
+- Control+C: Copy current message to clipboard
+- Browse mode auto-disable (keeps focus mode active for better WhatsApp experience)
+
+**Changed:**
+- Improved error messages: All scripts now provide clear feedback on failure
+- Navigation commands (Alt+1, Alt+2, Alt+D) now silent on success
+- Enter: Slider-based detection instead of button counting (more reliable)
+
+**Fixed:**
+- Alt+1 and Alt+2 correctly report errors when all paths fail
+- Optimized object filtering to reduce input lag
+
+### Version 1.1.0 (2025-01-30)
+
+**Added:**
+- Control+R: Read complete message
+- Smart voice message playback using slider detection
+
+**Changed:**
+- Enter: Improved logic using slider detection instead of counting buttons
+
+**Fixed:**
+- Alt+2 now correctly tries all navigation paths if first attempt fails
+
+### Version 1.0.0 (2025-01-29)
+
+**Initial release:**
+- Navigation shortcuts for conversation list, message list, and message composer
+- Voice message playback with support for individual chats and groups
+- Context menu access for message actions
+- Phone number filtering toggle for conversations and messages
+- Automatic focus mode activation in WhatsApp Desktop
+
 ## Credits
 
 Developed by Nuno Costa to provide accessibility enhancements for the modern WhatsApp Desktop experience.
@@ -46,7 +173,7 @@ Developed by Nuno Costa to provide accessibility enhancements for the modern Wha
 ## Support
 
 For issues or suggestions, please visit:
-https://github.com/nunotfc/WhatsAppNG/issues
+https://github.com/nunotfc/whatsAppNG/issues
 
 ## Translation Compilation
 

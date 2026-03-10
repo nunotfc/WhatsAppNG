@@ -159,6 +159,18 @@ msgstr "Autofokus-Modus: aktiviert"
 msgid "Auto Focus Mode: disabled"
 msgstr "Autofokus-Modus: deaktiviert"
 
+#: addon\appModules\whatsapp_root.py:1295
+msgid "Toggle usage hints filtering"
+msgstr "Nutzungshinweise filtern umschalten"
+
+#: addon\appModules\whatsapp_root.py:1305
+msgid "Usage hints: hidden"
+msgstr "Nutzungshinweise: versteckt"
+
+#: addon\appModules\whatsapp_root.py:1307
+msgid "Usage hints: visible"
+msgstr "Nutzungshinweise: sichtbar"
+
 #. Add-on summary/title, usually the user visible name of the add-on
 #. Translators: Summary/title for this add-on
 #. to be shown on installation and add-on information found in add-on store

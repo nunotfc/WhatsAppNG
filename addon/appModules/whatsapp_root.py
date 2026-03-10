@@ -26,6 +26,7 @@ SPEC = {
 	'filterChatList': 'boolean(default=False)',
 	'filterMessageList': 'boolean(default=True)',
 	'autoFocusMode': 'boolean(default=True)',
+	'filterUsageHints': 'boolean(default=True)',
 }
 
 MAYBE_RE = re.compile(r"\bTalvez\b\s*", re.IGNORECASE)
@@ -35,6 +36,15 @@ PHONE_RE = re.compile(r"\+\d[()\d\s-]{8,15}(?=[^\d]|$|\s)")
 
 # Video duration pattern: detect "3:41", "0:45", etc.
 DURATION_RE = re.compile(r"\b\d+:\d{2}\b")  # Time pattern like "3:41"
+
+# Usage hints pattern: detect "For more options..." in multiple languages
+USAGE_HINT_RE = re.compile(
+	r"(For more options|Untuk opsi|Para lebih|Para más|Pour plus|Per lebih|Per lebih banyak|"
+	r"Per lebih lanjut|Per più|Für weitere|Para mais|Daha fazla|Voor meer|Untuk mengakses|"
+	r"Untuk selengkapnya|Untuk bantuan|Untuk mendapatkan|Для получения|Để biết thêm|"
+	r"สำหรับตัวเลือก|その他のオプション|更多选项|अधिक विकल्पों|추가 옵션)",
+	re.IGNORECASE
+)
 
 class AppModule(appModuleHandler.AppModule):
 	"""
@@ -58,6 +68,7 @@ class AppModule(appModuleHandler.AppModule):
 			'filterChatList': False,
 			'filterMessageList': True,
 			'autoFocusMode': True,
+			'filterUsageHints': True,
 		}
 		self._loadConfigCache()
 
@@ -281,6 +292,10 @@ class AppModule(appModuleHandler.AppModule):
 	def _shouldAutoFocusMode(self):
 		"""Read from cache (much faster than config.conf)"""
 		return self._config_cache.get('autoFocusMode', True)
+
+	def _shouldFilterUsageHints(self):
+		"""Read from cache (much faster than config.conf)"""
+		return self._config_cache.get('filterUsageHints', True)
 
 	def _findButtons(self, obj):
 		"""Find all buttons recursively."""
@@ -902,6 +917,26 @@ class AppModule(appModuleHandler.AppModule):
 		name = obj.name
 		name_len = len(name)
 
+		# Filter usage hints (e.g., "Para mais opções, prima...") if enabled
+		# Only in message list (not conversation list)
+		if self._shouldFilterUsageHints():
+			# Check if this is message list (no TABLE ancestor)
+			obj_role = _role(obj)
+			if obj_role == 86 and not self._hasTableInAncestors(obj):
+				if USAGE_HINT_RE.search(name):
+					# Also check for common hint keywords like "arrow", "menu", "context", "seta"
+					hint_keywords = re.search(r"(arrow|panah|flecha|flèche|freccia|ok|стрелk|menu|konteks|context|contexto|contextuel|seta)", name, re.IGNORECASE)
+					if hint_keywords:
+						# Remove from "Para mais" or similar pattern to the end
+						name = USAGE_HINT_RE.split(name)[0].strip()
+						# Clean up any trailing artifacts
+						name = re.sub(r"\s{2,}", " ", name).strip()
+						obj.name = name
+						# Update name_len after filtering
+						name_len = len(name)
+						# Also hide the role ("secção") by changing it to STATICTEXT
+						obj.role = controlTypes.Role.STATICTEXT
+
 		# Early exit: name too short to have valid phone number
 		if name_len < 12 and not name.startswith('Talvez '):
 			return
@@ -1271,6 +1306,23 @@ class AppModule(appModuleHandler.AppModule):
 				ui.message(_("Message list: phone numbers visible"))
 		except Exception:
 			pass
+
+	@scriptHandler.script(
+		description=_("Toggle usage hints filtering"),
+		gesture="kb:NVDA+shift+h"
+	)
+	def script_toggleUsageHints(self, gesture):
+		"""Toggle usage hints filtering."""
+		current = self._shouldFilterUsageHints()
+		new_val = not current
+		config.conf[CONFIG_SECTION]["filterUsageHints"] = new_val
+		config.conf.save()
+		self._config_cache['filterUsageHints'] = new_val  # Update cache
+
+		if new_val:
+			ui.message(_("Usage hints: hidden"))
+		else:
+			ui.message(_("Usage hints: visible"))
 
 	@scriptHandler.script(
 		gesture="kb:escape"
