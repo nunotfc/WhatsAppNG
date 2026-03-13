@@ -917,12 +917,14 @@ class AppModule(appModuleHandler.AppModule):
 		name = obj.name
 		name_len = len(name)
 
+		# Store original role before any changes (needed for phone filtering)
+		original_role = _role(obj)
+
 		# Filter usage hints (e.g., "Para mais opções, prima...") if enabled
 		# Only in message list (not conversation list)
 		if self._shouldFilterUsageHints():
 			# Check if this is message list (no TABLE ancestor)
-			obj_role = _role(obj)
-			if obj_role == 86 and not self._hasTableInAncestors(obj):
+			if original_role == 86 and not self._hasTableInAncestors(obj):
 				if USAGE_HINT_RE.search(name):
 					# Also check for common hint keywords like "arrow", "menu", "context", "seta"
 					hint_keywords = re.search(r"(arrow|panah|flecha|flèche|freccia|ok|стрелk|menu|konteks|context|contexto|contextuel|seta)", name, re.IGNORECASE)
@@ -934,8 +936,8 @@ class AppModule(appModuleHandler.AppModule):
 						obj.name = name
 						# Update name_len after filtering
 						name_len = len(name)
-						# Also hide the role ("secção") by changing it to STATICTEXT
-						obj.role = controlTypes.Role.STATICTEXT
+						# Also hide the role ("secção") by changing it to UNKNOWN
+						obj.role = controlTypes.Role.UNKNOWN
 
 		# Early exit: name too short to have valid phone number
 		if name_len < 12 and not name.startswith('Talvez '):
@@ -957,7 +959,8 @@ class AppModule(appModuleHandler.AppModule):
 			return
 
 		try:
-			obj_role = _role(obj)
+			# Use original role (before we potentially changed it to UNKNOWN)
+			obj_role = original_role
 
 			# Quick exit: only process SECTION and TABLECELL
 			if obj_role != 86 and obj_role != 29:
@@ -1036,8 +1039,9 @@ class AppModule(appModuleHandler.AppModule):
 		except Exception:
 			return False
 
-		# The focus itself must be SECTION (not EDITABLETEXT inside SECTION)
-		if _role(focus) != 86:
+		# The focus itself must be SECTION or UNKNOWN (we change role when filtering hints)
+		focus_role = _role(focus)
+		if focus_role != 86 and focus_role != controlTypes.Role.UNKNOWN:
 			return False
 
 		# And does NOT have TABLE as ancestor
@@ -1276,6 +1280,7 @@ class AppModule(appModuleHandler.AppModule):
 			new_val = not current
 			config.conf[CONFIG_SECTION]["filterChatList"] = new_val
 			config.conf.save()
+			self._config_cache['filterChatList'] = new_val  # Update cache!
 
 			if new_val:
 				ui.message(_("Conversation list: phone numbers hidden"))
