@@ -6,10 +6,12 @@ import scriptHandler
 import controlTypes
 import config
 import re
+import unicodedata
 import addonHandler
 import wx
 import treeInterceptorHandler
 import speech
+from logHandler import log
 
 try:
 	from controlTypes import Role
@@ -26,7 +28,6 @@ SPEC = {
 	'filterChatList': 'boolean(default=False)',
 	'filterMessageList': 'boolean(default=True)',
 	'autoFocusMode': 'boolean(default=True)',
-	'filterUsageHints': 'boolean(default=True)',
 }
 
 MAYBE_RE = re.compile(r"\bTalvez\b\s*", re.IGNORECASE)
@@ -37,14 +38,161 @@ PHONE_RE = re.compile(r"\+\d[()\d\s-]{8,15}(?=[^\d]|$|\s)")
 # Video duration pattern: detect "3:41", "0:45", etc.
 DURATION_RE = re.compile(r"\b\d+:\d{2}\b")  # Time pattern like "3:41"
 
-# Usage hints pattern: detect "For more options..." in multiple languages
-USAGE_HINT_RE = re.compile(
-	r"(For more options|Untuk opsi|Para lebih|Para más|Pour plus|Per lebih|Per lebih banyak|"
-	r"Per lebih lanjut|Per più|Für weitere|Para mais|Daha fazla|Voor meer|Untuk mengakses|"
-	r"Untuk selengkapnya|Untuk bantuan|Untuk mendapatkan|Для получения|Để biết thêm|"
-	r"สำหรับตัวเลือก|その他のオプション|更多选项|अधिक विकल्पों|추가 옵션)",
-	re.IGNORECASE
-)
+# -----------------------------------------------------------------------------
+# Suppress duplicated announcements in conversation list:
+# NVDA often speaks each chat row twice; the second speak sequence is usually:
+#   [ "<row text>", "<localized Role.SECTION label>" ]
+# This filter drops only that redundant second sequence, and only when focus is
+# inside the conversation list table.
+# -----------------------------------------------------------------------------
+
+_DUP_WS_RE = re.compile(r"\s+")
+_WHATSAPP_PIDS = set()
+
+def _dup_strip_accents(s: str) -> str:
+	try:
+		s = unicodedata.normalize("NFD", s)
+		return "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
+	except Exception:
+		return s or ""
+
+def _dup_norm(s: str) -> str:
+	if s is None:
+		return ""
+	s = str(s)
+	s = _dup_strip_accents(s).lower()
+	s = _DUP_WS_RE.sub(" ", s)
+	return s.strip()
+
+def _get_section_label_norm() -> str:
+	"""
+	Localized label for Role.SECTION (e.g. 'sección', 'section', 'sektion', etc),
+	normalized (lowercase, no accents, compact spaces).
+	"""
+	if Role is None:
+		return "section"
+	try:
+		# NVDA provides localized display string for each role
+		return _dup_norm(Role.SECTION.displayString)
+	except Exception:
+		return "section"
+
+_SECTION_LABEL_NORM = _get_section_label_norm()
+
+def _is_whatsapp_foreground_for_pid() -> bool:
+	"""
+	Only apply filter when WhatsApp is foreground AND the foreground PID belongs
+	to a WhatsApp process for which this add-on's AppModule instance has registered.
+	"""
+	try:
+		fg = api.getForegroundObject()
+	except Exception:
+		return False
+	if not fg:
+		return False
+
+	try:
+		app = getattr(fg, "appModule", None)
+		appName = getattr(app, "appName", "") if app else ""
+	except Exception:
+		appName = ""
+
+	if appName != "whatsapp.root":
+		# Fallback by title, just in case appName differs in some environments
+		try:
+			title = (fg.name or "").lower()
+			if "whatsapp" not in title:
+				return False
+		except Exception:
+			return False
+
+	try:
+		pid = getattr(fg, "processID", None)
+	except Exception:
+		pid = None
+
+	return pid in _WHATSAPP_PIDS
+
+def _has_table_in_ancestors(obj, maxLevels=3) -> bool:
+	"""Fast check for TABLE ancestor; keeps it cheap."""
+	if Role is None:
+		return False
+	table_role = getattr(Role, "TABLE", None)
+	if table_role is None:
+		return False
+
+	current = obj
+	for _ in range(maxLevels):
+		try:
+			current = current.parent
+			if current is None:
+				return False
+			if getattr(current, "role", None) == table_role:
+				return True
+		except Exception:
+			break
+	return False
+
+def _focus_in_conversation_list_table() -> bool:
+	"""
+	True when focus is inside the conversation list table.
+	In this add-on, message list focus is explicitly defined as SECTION without TABLE ancestor,
+	so TABLE ancestor is a good discriminator.
+	"""
+	try:
+		focus = api.getFocusObject()
+	except Exception:
+		return False
+	if not focus:
+		return False
+	return _has_table_in_ancestors(focus, 3)
+
+def _suppress_duplicate_section_speech_sequence(seq):
+	# Don't touch anything outside WhatsApp foreground (and known WhatsApp PID)
+	if not _is_whatsapp_foreground_for_pid():
+		return seq
+
+	# Extract only string parts of the speech sequence
+	strings = [x for x in seq if isinstance(x, str)]
+	# The redundant call we want to drop is usually exactly 2 strings:
+	# [row text, section-label]
+	if len(strings) != 2:
+		return seq
+
+	if _dup_norm(strings[1]) != _SECTION_LABEL_NORM:
+		return seq
+
+	# Only when focus is inside the conversation list table
+	if not _focus_in_conversation_list_table():
+		return seq
+
+	# Drop the whole redundant sequence (nothing is spoken)
+	log.debugWarning("WA_FILTER: suppressed duplicate chat list announce (+SECTION): %r", strings[0][:80])
+	return []
+
+def _register_duplicate_speech_filter_for_pid(pid):
+	"""Register (or re-register) the speech sequence filter and remember this WhatsApp PID."""
+	try:
+		if pid is not None:
+			_WHATSAPP_PIDS.add(pid)
+	except Exception:
+		pass
+
+	# Avoid accumulating multiple filters after reloads
+	old = getattr(speech, "_whatsappNG_dupSectionFilter", None)
+	if old is not None:
+		try:
+			speech.filter_speechSequence.unregister(old)
+		except Exception:
+			pass
+
+	speech._whatsappNG_dupSectionFilter = _suppress_duplicate_section_speech_sequence
+	try:
+		speech.filter_speechSequence.register(_suppress_duplicate_section_speech_sequence)
+	except Exception:
+		# If NVDA build doesn't expose this extension point, fail silently
+		pass
+
 
 class AppModule(appModuleHandler.AppModule):
 	"""
@@ -68,7 +216,6 @@ class AppModule(appModuleHandler.AppModule):
 			'filterChatList': False,
 			'filterMessageList': True,
 			'autoFocusMode': True,
-			'filterUsageHints': True,
 		}
 		self._loadConfigCache()
 
@@ -81,6 +228,9 @@ class AppModule(appModuleHandler.AppModule):
 
 		# Register handler to auto-reactivate browse mode if deactivated
 		treeInterceptorHandler.post_browseModeStateChange.register(self._onBrowseModeStateChange)
+
+		# Register speech filter to suppress duplicated announce in conversation list (multilingual)
+		_register_duplicate_speech_filter_for_pid(self.processID)
 
 	def _loadConfigCache(self):
 		"""Load all config values into cache once."""
@@ -293,10 +443,6 @@ class AppModule(appModuleHandler.AppModule):
 		"""Read from cache (much faster than config.conf)"""
 		return self._config_cache.get('autoFocusMode', True)
 
-	def _shouldFilterUsageHints(self):
-		"""Read from cache (much faster than config.conf)"""
-		return self._config_cache.get('filterUsageHints', True)
-
 	def _findButtons(self, obj):
 		"""Find all buttons recursively."""
 		buttons = []
@@ -392,15 +538,12 @@ class AppModule(appModuleHandler.AppModule):
 		"""Find first table cell recursively."""
 		if depth > max_depth:
 			return None
-		try:
-			if _role(obj) == controlTypes.Role.TABLECELL:
-				return obj
-			for child in getattr(obj, "children", []):
-				result = self._findFirstCell(child, depth + 1, max_depth)
-				if result:
-					return result
-		except Exception:
-			pass
+		if _role(obj) == controlTypes.Role.TABLECELL:
+			return obj
+		for child in getattr(obj, "children", []):
+			result = self._findFirstCell(child, depth + 1, max_depth)
+			if result:
+				return result
 		return None
 
 	@scriptHandler.script(
@@ -414,33 +557,25 @@ class AppModule(appModuleHandler.AppModule):
 			gesture.send()
 			return
 
-		focus = api.getFocusObject()
-		focus_name = getattr(focus, "name", "") or ""
+		obj = api.getFocusObject()
 
-		if not focus_name:
-			gesture.send()
-			return
+		if obj.name:
+			# Try to get formatted text first
+			text, error = self._getMessageText(require_expanded=False)
+			if text:
+				api.copyToClip(text)
+				ui.message(_("Copied"))
+				return
 
-		# Try to get expanded text first (if there's "read more")
-		text, error = self._getMessageText(require_expanded=False)
+			# Fallback: use obj.name with filters
+			text = obj.name.strip()
+			text = re.sub(r'\s*secção$', '', text, flags=re.IGNORECASE)
+			text = re.sub(r'\s*list\s*item$', '', text, flags=re.IGNORECASE)
+			text = re.sub(r'\s*\d+\s*de\s*\d+$', '', text)
+			text = re.sub(r'\s*$', '', text)
 
-		if text:
-			api.copyToClip(text)
-			ui.message(_("Copied"))
-			return
-
-		# Fallback: collect text from siblings (same as Alt+Enter)
-		parent = getattr(focus, "parent", None)
-		if parent:
-			siblings = getattr(parent, "children", []) or []
-			all_text_parts = []
-			for sibling in siblings:
-				all_text_parts.extend(self._collectTexts(sibling, 20))
-
-			existing_text = " ".join(all_text_parts)
-
-			if existing_text.strip():
-				api.copyToClip(existing_text)
+			if text.strip():
+				api.copyToClip(text)
 				ui.message(_("Copied"))
 				return
 
@@ -657,51 +792,15 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_readCompleteMessageBrowse(self, gesture):
 		"""Alt+Enter: Read complete message in browse mode."""
-		# Validation
-		if not self._isMessageListFocus():
-			gesture.send()
-			return
-
-		focus = api.getFocusObject()
-		focus_name = getattr(focus, "name", "") or ""
-
-		if not focus_name:
-			gesture.send()
-			return
-
-		# Try to get expanded text first (if there's "read more")
 		text, error = self._getMessageText(require_expanded=True)
-
-		if not error and text:
-			# Successfully got expanded text
-			ui.browseableMessage(text)
-		else:
-			# Fallback: show current message text (even if short or no "read more")
-			parent = getattr(focus, "parent", None)
-			if parent:
-				siblings = getattr(parent, "children", []) or []
-				all_text_parts = []
-				for sibling in siblings:
-					all_text_parts.extend(self._collectTexts(sibling, 20))
-
-				existing_text = " ".join(all_text_parts)
-
-				if existing_text.strip():
-					ui.browseableMessage(existing_text)
-				else:
-					# Last resort: use obj.name with filters (same as Ctrl+C)
-					text = focus_name.strip()
-					text = re.sub(r'\s*secção$', '', text, flags=re.IGNORECASE)
-					text = re.sub(r'\s*list\s*item$', '', text, flags=re.IGNORECASE)
-					text = re.sub(r'\s*\d+\s*de\s*\d+$', '', text)
-					text = re.sub(r'\s*$', '', text)
-
-					if text.strip():
-						ui.browseableMessage(text)
-					else:
-						gesture.send()
-			else:
+		if error:
+			ui.message(error)
+			if error == _("Not in message list"):
 				gesture.send()
+			elif error == _("Not a text message"):
+				gesture.send()
+		else:
+			ui.browseableMessage(text)
 
 	@scriptHandler.script(
 		description=_("Open context menu"),
@@ -917,28 +1016,6 @@ class AppModule(appModuleHandler.AppModule):
 		name = obj.name
 		name_len = len(name)
 
-		# Store original role before any changes (needed for phone filtering)
-		original_role = _role(obj)
-
-		# Filter usage hints (e.g., "Para mais opções, prima...") if enabled
-		# Only in message list (not conversation list)
-		if self._shouldFilterUsageHints():
-			# Check if this is message list (no TABLE ancestor)
-			if original_role == 86 and not self._hasTableInAncestors(obj):
-				if USAGE_HINT_RE.search(name):
-					# Also check for common hint keywords like "arrow", "menu", "context", "seta"
-					hint_keywords = re.search(r"(arrow|panah|flecha|flèche|freccia|ok|стрелk|menu|konteks|context|contexto|contextuel|seta)", name, re.IGNORECASE)
-					if hint_keywords:
-						# Remove from "Para mais" or similar pattern to the end
-						name = USAGE_HINT_RE.split(name)[0].strip()
-						# Clean up any trailing artifacts
-						name = re.sub(r"\s{2,}", " ", name).strip()
-						obj.name = name
-						# Update name_len after filtering
-						name_len = len(name)
-						# Also hide the role ("secção") by changing it to UNKNOWN
-						obj.role = controlTypes.Role.UNKNOWN
-
 		# Early exit: name too short to have valid phone number
 		if name_len < 12 and not name.startswith('Talvez '):
 			return
@@ -959,8 +1036,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 
 		try:
-			# Use original role (before we potentially changed it to UNKNOWN)
-			obj_role = original_role
+			obj_role = _role(obj)
 
 			# Quick exit: only process SECTION and TABLECELL
 			if obj_role != 86 and obj_role != 29:
@@ -1039,9 +1115,8 @@ class AppModule(appModuleHandler.AppModule):
 		except Exception:
 			return False
 
-		# The focus itself must be SECTION or UNKNOWN (we change role when filtering hints)
-		focus_role = _role(focus)
-		if focus_role != 86 and focus_role != controlTypes.Role.UNKNOWN:
+		# The focus itself must be SECTION (not EDITABLETEXT inside SECTION)
+		if _role(focus) != 86:
 			return False
 
 		# And does NOT have TABLE as ancestor
@@ -1280,7 +1355,6 @@ class AppModule(appModuleHandler.AppModule):
 			new_val = not current
 			config.conf[CONFIG_SECTION]["filterChatList"] = new_val
 			config.conf.save()
-			self._config_cache['filterChatList'] = new_val  # Update cache!
 
 			if new_val:
 				ui.message(_("Conversation list: phone numbers hidden"))
@@ -1313,23 +1387,6 @@ class AppModule(appModuleHandler.AppModule):
 			pass
 
 	@scriptHandler.script(
-		description=_("Toggle usage hints filtering"),
-		gesture="kb:NVDA+shift+h"
-	)
-	def script_toggleUsageHints(self, gesture):
-		"""Toggle usage hints filtering."""
-		current = self._shouldFilterUsageHints()
-		new_val = not current
-		config.conf[CONFIG_SECTION]["filterUsageHints"] = new_val
-		config.conf.save()
-		self._config_cache['filterUsageHints'] = new_val  # Update cache
-
-		if new_val:
-			ui.message(_("Usage hints: hidden"))
-		else:
-			ui.message(_("Usage hints: visible"))
-
-	@scriptHandler.script(
 		gesture="kb:escape"
 	)
 	def script_escape(self, gesture):
@@ -1351,6 +1408,7 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(_("Auto Focus Mode: enabled"))
 		else:
 			ui.message(_("Auto Focus Mode: disabled"))
+
 
 def _role(obj):
 	try:
