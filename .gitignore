@@ -33,6 +33,12 @@ Thumbs.db
 
 # Localization (keep .pot and .po, ignore generated .mo)
 locale/**/*.mo
+addon/locale/**/*.mo
+*.mo
+
+# Documentation HTML files (generated from MD)
+addon/doc/**/*.html
+*.html
 
 # Keep base language files as per gitignore in addon template
 locale/en/LC_MESSAGES/nvda.po
