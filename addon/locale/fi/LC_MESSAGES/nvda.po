@@ -1,0 +1,210 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the 'whatsAppNG' package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#. Brief changelog for this version
+#. Translators: what's new content for the add-on version to be shown in the add-on store
+#: buildVars.py:29
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 'whatsAppNG' '1.3.0'\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2026-03-19 21:54+0000\n"
+"PO-Revision-Date: 2026-03-23 21:23+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: addon\appModules\whatsapp_root.py:56
+msgid "WhatsApp NG"
+msgstr "WhatsApp NG"
+
+#: addon\appModules\whatsapp_root.py:407
+msgid "Copy current message to clipboard"
+msgstr "Kopioi nykyinen viesti leikepöydälle"
+
+#: addon\appModules\whatsapp_root.py:429 addon\appModules\whatsapp_root.py:444
+msgid "Copied"
+msgstr "Kopioitu"
+
+#. Not a message or couldn't copy
+#: addon\appModules\whatsapp_root.py:448
+msgid "Cannot copy"
+msgstr "Ei voi kopioida"
+
+#: addon\appModules\whatsapp_root.py:452
+msgid "Play voice message"
+msgstr "Toista ääniviesti"
+
+#. No slider or button found
+#: addon\appModules\whatsapp_root.py:466 addon\appModules\whatsapp_root.py:486
+#: addon\appModules\whatsapp_root.py:489
+msgid "No audio message found"
+msgstr "Ääniviestiä ei löydy"
+
+#: addon\appModules\whatsapp_root.py:499
+#| msgid "Go to WhatsApp message list"
+msgid "Not in message list"
+msgstr "Ei viestiluettelossa"
+
+#: addon\appModules\whatsapp_root.py:505 addon\appModules\whatsapp_root.py:585
+msgid "Not a text message"
+msgstr "Ei ole tekstimuotoinen viesti"
+
+#: addon\appModules\whatsapp_root.py:509 addon\appModules\whatsapp_root.py:591
+msgid "No message found"
+msgstr "Viestiä ei löydy"
+
+#: addon\appModules\whatsapp_root.py:565 addon\appModules\whatsapp_root.py:567
+#: addon\appModules\whatsapp_root.py:647 addon\appModules\whatsapp_root.py:652
+msgid "Text not found"
+msgstr "Tekstiä ei löydy"
+
+#. Translators: Read complete message (click "read more" and speak text)
+#: addon\appModules\whatsapp_root.py:571
+msgid "Read complete message (clicks 'read more' button)"
+msgstr "Lue koko viesti"
+
+#: addon\appModules\whatsapp_root.py:655
+msgid "Read complete message in browse mode"
+msgstr "Lue koko viesti selaustilassa"
+
+#: addon\appModules\whatsapp_root.py:707
+msgid "Open context menu"
+msgstr "Avaa pikavalikko"
+
+#: addon\appModules\whatsapp_root.py:721 addon\appModules\whatsapp_root.py:743
+#: addon\appModules\whatsapp_root.py:746
+msgid "No menu found"
+msgstr "Valikkoa ei löydy"
+
+#: addon\appModules\whatsapp_root.py:749
+#| msgid "Play voice message"
+msgid "React to message"
+msgstr "Reagoi viestiin"
+
+#: addon\appModules\whatsapp_root.py:785
+msgid "Focus message composer"
+msgstr "Siirry viestinkirjoituskenttään"
+
+#: addon\appModules\whatsapp_root.py:797 addon\appModules\whatsapp_root.py:857
+#: addon\appModules\whatsapp_root.py:859
+msgid "Message composer not found"
+msgstr "Viestinkirjoituskenttää ei löydy"
+
+#: addon\appModules\whatsapp_root.py:1096
+msgid "Go to WhatsApp conversation list"
+msgstr "Siirry WhatsAppin keskustelulistaan"
+
+#: addon\appModules\whatsapp_root.py:1130
+#: addon\appModules\whatsapp_root.py:1173
+#: addon\appModules\whatsapp_root.py:1176
+msgid "Conversation list not found"
+msgstr "Keskustelulistaa ei löydy"
+
+#: addon\appModules\whatsapp_root.py:1189
+msgid "Go to WhatsApp message list"
+msgstr "Siirry WhatsAppin viestilistaan"
+
+#: addon\appModules\whatsapp_root.py:1201
+#: addon\appModules\whatsapp_root.py:1263
+#: addon\appModules\whatsapp_root.py:1266
+msgid "Message list not found"
+msgstr "Viestilistaa ei löydy"
+
+#: addon\appModules\whatsapp_root.py:1279
+msgid "Toggle phone number filtering in conversation list"
+msgstr "Vaihda puhelinnumeroiden suodatuksen tilaa keskustelulistassa"
+
+#: addon\appModules\whatsapp_root.py:1285
+msgid "Use this command in the conversation list"
+msgstr "Käytä tätä komentoa keskustelulistassa"
+
+#: addon\appModules\whatsapp_root.py:1294
+msgid "Conversation list: phone numbers hidden"
+msgstr "Puhelinnumerot piilotettu keskustelulistasta"
+
+#: addon\appModules\whatsapp_root.py:1296
+msgid "Conversation list: phone numbers visible"
+msgstr "Puhelinnumerot näkyvissä keskustelulistassa"
+
+#: addon\appModules\whatsapp_root.py:1301
+msgid "Toggle phone number filtering in message list"
+msgstr "Vaihda puhelinnumeroiden suodatuksen tilaa viestilistassa"
+
+#: addon\appModules\whatsapp_root.py:1307
+msgid "Use this command in the message list"
+msgstr "Käytä tätä komentoa viestilistassa"
+
+#: addon\appModules\whatsapp_root.py:1317
+msgid "Message list: phone numbers hidden"
+msgstr "Puhelinnumerot piilotettu viestilistasta"
+
+#: addon\appModules\whatsapp_root.py:1319
+msgid "Message list: phone numbers visible"
+msgstr "Puhelinnumerot näkyvissä viestilistassa"
+
+#: addon\appModules\whatsapp_root.py:1324
+msgid "Toggle usage hints filtering"
+msgstr "Ota käyttövinkkien suodatus käyttöön tai poista se käytöstä"
+
+#: addon\appModules\whatsapp_root.py:1336
+msgid "Usage hints: hidden"
+msgstr "Käyttövinkit piilotettu"
+
+#: addon\appModules\whatsapp_root.py:1338
+msgid "Usage hints: visible"
+msgstr "Käyttövinkit näytetään"
+
+#: addon\appModules\whatsapp_root.py:1348
+msgid "Toggle automatic Focus Mode"
+msgstr "Ota automaattinen lomaketila käyttöön tai poista se käytöstä"
+
+#: addon\appModules\whatsapp_root.py:1359
+msgid "Auto Focus Mode: enabled"
+msgstr "Automaattinen lomaketila käytössä"
+
+#: addon\appModules\whatsapp_root.py:1361
+msgid "Auto Focus Mode: disabled"
+msgstr "Automaattinen lomaketila ei käytössä"
+
+#. Add-on summary/title, usually the user visible name of the add-on
+#. Translators: Summary/title for this add-on
+#. to be shown on installation and add-on information found in add-on store
+#: buildVars.py:21
+msgid "WhatsApp Desktop accessibility enhancements"
+msgstr "WhatsApp Desktopin saavutettavuusparannukset"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-on store
+#: buildVars.py:24
+msgid ""
+"Provides accessibility improvements for the web-based WhatsApp Desktop, "
+"including navigation shortcuts, message interaction enhancements, and better "
+"screen reader support."
+msgstr ""
+"Saavutettavuusparannuksia verkkopohjaiselle WhatsApp Desktopille, mukaan "
+"lukien navigointipikanäppäimet, viestien käsittelyn parannukset sekä parempi "
+"ruudunlukijatuki."
+
+#~ msgid ""
+#~ "- Fixed Control+R to work only on text messages.\n"
+#~ "- Turkish translation support.\n"
+#~ "- Toggle automatic Focus Mode option.\n"
+#~ "- Improved navigation performance.\n"
+#~ "- Video playback with Enter key.\n"
+#~ "- Escape key now passes through correctly."
+#~ msgstr ""
+#~ "- Korjattu Ctrl+R toimimaan vain tekstimuotoisille viesteille.\n"
+#~ "- Turkinkielinen käännös lisätty.\n"
+#~ "- Asetus automaattisen lomaketilan käyttöönotolle ja käytöstä "
+#~ "poistamiselle.\n"
+#~ "- Navigoinnin suorituskykyä parannettu.\n"
+#~ "- Videon toisto Enter-näppäimellä.\n"
+#~ "- Esc-näppäimen painallus välitetään nyt oikein käyttöjärjestelmälle."
