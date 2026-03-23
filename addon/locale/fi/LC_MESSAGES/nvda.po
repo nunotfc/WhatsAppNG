@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: 'whatsAppNG' '1.3.0'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2026-03-19 21:54+0000\n"
-"PO-Revision-Date: 2026-03-23 21:23+0200\n"
+"PO-Revision-Date: 2026-03-23 23:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -51,7 +51,7 @@ msgstr "Ääniviestiä ei löydy"
 #: addon\appModules\whatsapp_root.py:499
 #| msgid "Go to WhatsApp message list"
 msgid "Not in message list"
-msgstr "Ei viestiluettelossa"
+msgstr "Ei viestilistassa"
 
 #: addon\appModules\whatsapp_root.py:505 addon\appModules\whatsapp_root.py:585
 msgid "Not a text message"
@@ -120,7 +120,7 @@ msgstr "Viestilistaa ei löydy"
 
 #: addon\appModules\whatsapp_root.py:1279
 msgid "Toggle phone number filtering in conversation list"
-msgstr "Vaihda puhelinnumeroiden suodatuksen tilaa keskustelulistassa"
+msgstr "Vaihda puhelinnumerosuodatuksen tilaa keskustelulistassa"
 
 #: addon\appModules\whatsapp_root.py:1285
 msgid "Use this command in the conversation list"
@@ -136,7 +136,7 @@ msgstr "Puhelinnumerot näkyvissä keskustelulistassa"
 
 #: addon\appModules\whatsapp_root.py:1301
 msgid "Toggle phone number filtering in message list"
-msgstr "Vaihda puhelinnumeroiden suodatuksen tilaa viestilistassa"
+msgstr "Vaihda puhelinnumerosuodatuksen tilaa viestilistassa"
 
 #: addon\appModules\whatsapp_root.py:1307
 msgid "Use this command in the message list"
@@ -160,7 +160,7 @@ msgstr "Käyttövinkit piilotettu"
 
 #: addon\appModules\whatsapp_root.py:1338
 msgid "Usage hints: visible"
-msgstr "Käyttövinkit näytetään"
+msgstr "Käyttövinkit näkyvissä"
 
 #: addon\appModules\whatsapp_root.py:1348
 msgid "Toggle automatic Focus Mode"
@@ -172,7 +172,7 @@ msgstr "Automaattinen lomaketila käytössä"
 
 #: addon\appModules\whatsapp_root.py:1361
 msgid "Auto Focus Mode: disabled"
-msgstr "Automaattinen lomaketila ei käytössä"
+msgstr "Automaattinen lomaketila poistettu käytöstä"
 
 #. Add-on summary/title, usually the user visible name of the add-on
 #. Translators: Summary/title for this add-on
