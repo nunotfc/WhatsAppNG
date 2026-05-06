@@ -257,13 +257,13 @@ class AppModule(appModuleHandler.AppModule):
 		return buttons, False
 
 	def _collectTexts(self, obj, min_length=20):
-		"""Collect STATICTEXT content recursively."""
+		"""Collect STATICTEXT and LINK content recursively."""
 		texts = []
 		try:
 			role = _role(obj)
 			if role is None:
 				return texts
-			if role == controlTypes.Role.STATICTEXT:
+			if role == controlTypes.Role.STATICTEXT or role == 7:  # STATICTEXT or LINK
 				name = getattr(obj, "name", "") or ""
 				if name:
 					clean = name.strip()
@@ -518,61 +518,73 @@ class AppModule(appModuleHandler.AppModule):
 
 		siblings = getattr(parent, "children", []) or []
 
-		# Collect existing text
-		all_text_parts = []
+		# Try to find and click "read more" link first
+		def findReadMore(obj):
+			"""Find LINK (R:9) that appears after the … truncation marker."""
+			try:
+				children = getattr(obj, "children", []) or []
+				found_ellipsis = False
+				for child in children:
+					role = _role(child)
+					name = (getattr(child, "name", "") or "").strip()
+					# Track when we see the … truncation
+					if role == 7 and name == "…":
+						found_ellipsis = True
+						continue
+					# The R:9 LINK after … is the read more button
+					if found_ellipsis and role == 9:
+						return child
+					if name:
+						found_ellipsis = False
+				# Recurse into children
+				for child in children:
+					result = findReadMore(child)
+					if result:
+						return result
+			except Exception:
+				pass
+			return None
+
+		read_more_found = None
 		for sibling in siblings:
-			all_text_parts.extend(self._collectTexts(sibling, 20))
+			read_more_found = findReadMore(sibling)
+			if read_more_found:
+				break
 
-		existing_text = " ".join(all_text_parts)
+		if read_more_found:
+			read_more_found.doAction()
+			message_parent = parent
 
-		# If text already complete, read it
-		if len(existing_text) > 800:
-			ui.message(existing_text)
+			def speak_after_click():
+				speech.cancelSpeech()
+				text_parts = []
+				try:
+					updated_siblings = getattr(message_parent, "children", []) or []
+					for sib in updated_siblings:
+						text_parts.extend(self._collectTexts(sib, 10))
+				except Exception:
+					pass
+
+				expanded = [t for t in text_parts if "…" not in t]
+				full_text = "\r\n".join(expanded)
+
+				if full_text:
+					ui.message(full_text)
+				else:
+					ui.message(_("Text not found"))
+
+			wx.CallLater(150, speak_after_click)
 			return
 
-		# Need to expand "read more" - find and click button
+		# No "read more" button - just read expanded text
+		all_text_parts = []
 		for sibling in siblings:
-			collapsed_obj = self._findCollapsed(sibling)
-			if collapsed_obj:
-				all_buttons, _found = self._collectButtonsUntil(sibling, collapsed_obj)
+			all_text_parts.extend(self._collectTexts(sibling, 10))
 
-				focusable_buttons = []
-				for btn in all_buttons:
-					states = getattr(btn, "states", set())
-					if 16777216 in states:
-						focusable_buttons.append(btn)
-
-				if len(focusable_buttons) >= 2:
-					read_more_btn = focusable_buttons[1]
-				elif len(focusable_buttons) == 1:
-					read_more_btn = focusable_buttons[0]
-				else:
-					continue
-
-				# Click and then speak after expansion
-				read_more_btn.doAction()
-				message_parent = parent
-
-				def speak_after_click():
-					speech.cancelSpeech()  # Cancel any speech before reading expanded text
-					nonlocal all_text_parts
-					all_text_parts = []
-					try:
-						updated_siblings = getattr(message_parent, "children", []) or []
-						for sib in updated_siblings:
-							all_text_parts.extend(self._collectTexts(sib, 20))
-					except Exception:
-						pass
-
-					full_text = "\r\n".join(all_text_parts)
-
-					if full_text and len(full_text) > 300:
-						ui.message(full_text)
-					else:
-						ui.message(_("Text not found"))
-
-				wx.CallLater(150, speak_after_click)
-				return
+		expanded_parts = [t for t in all_text_parts if "…" not in t]
+		if expanded_parts:
+			ui.message("\r\n".join(expanded_parts))
+			return
 
 		ui.message(_("Text not found"))
 
@@ -928,8 +940,14 @@ class AppModule(appModuleHandler.AppModule):
 		if "whatsapp" not in window_title.lower():
 			return False
 
-		# Accept LISTITEM (hints filtered) or SECTION/86 (hints not filtered)
+		# Accept LISTITEM (hints filtered), SECTION/86 (hints not filtered), or STATICTEXT/15 (child inside message)
 		focus_role = _role(focus)
+		if focus_role == controlTypes.Role.STATICTEXT:
+			# Check if parent is SECTION/86 (message container)
+			parent = getattr(focus, "parent", None)
+			if parent and _role(parent) == 86:
+				return not self._hasTableInAncestors(focus)
+			return False
 		if focus_role != controlTypes.Role.LISTITEM and focus_role != 86:
 			return False
 
