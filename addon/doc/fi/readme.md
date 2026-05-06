@@ -90,16 +90,16 @@ Määritä pikanäppäimet kohdassa **NVDA-valikko → Mukautukset → Näppäin
 ### Versio 1.8.0 (1.5.2026)
 
 **Lisätty:**
-- Lahjoitusikkuna lisäosan asennuksen yhteydessä
+- Lahjoitusta pyytävä valintaikkuna lisäosaa asennettaessa
 
 **Muutettu:**
 - Navigointi (Alt+1, Alt+2, Alt+D) kestää nyt paremmin WhatsAppin käyttöliittymämuutoksia
 
 **Korjattu:**
-- Enter ja Shift+Enter eivät toimineet, kun käyttövinkkien suodatus on pois päältä
-- Enter-näppäin ei toiminut tiedostovalintaikkunoissa ja keskustelulistassa
-- Puhelinnumeroiden suodatuksen vaihto keskustelulistassa ei päivittynyt oikein
-- Parannettu suomenkielistä käännöstä ja dokumentaatiota
+- Enter ja Vaihto+Enter eivät toimineet, kun käyttövinkkien suodatus oli pois päältä
+- Enter-näppäin ei toiminut tiedostovalintaikkunoissa eikä keskusteluluettelossa
+- Puhelinnumeroiden suodatuksen tila ei päivittynyt oikein keskusteluluettelossa
+- Suomenkielistä käännöstä ja dokumentaatiota parannettu
 
 ### Versio 1.7.1 (10.4.2026)
 
