@@ -87,6 +87,16 @@ Configura los atajos en:
 
 ## Historial de cambios
 
+### Versión 1.8.1 (2026-05-06)
+
+**Cambiado:**
+- Compatibilidad con NVDA 2026
+
+**Corregido:**
+- Control+R: No funcionaba en mensajes con botón "leer más" (ahora encuentra el botón por estructura en lugar de texto dependiente del idioma)
+- Control+R: No funcionaba con el filtro de sugerencias de uso desactivado
+- Control+R: No leía mensajes con enlaces o texto formateado
+
 ### Versión 1.8.0 (2026-05-01)
 
 **Añadido:**

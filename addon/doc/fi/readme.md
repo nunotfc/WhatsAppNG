@@ -87,6 +87,16 @@ Määritä pikanäppäimet kohdassa **NVDA-valikko → Mukautukset → Näppäin
 
 ## Muutosloki
 
+### Versio 1.8.1 (6.5.2026)
+
+**Muutettu:**
+- NVDA 2026 -yhteensopivuus
+
+**Korjattu:**
+- Control+R: Ei toiminut viesteissä, joissa on "Lue lisää" -painike (löytää nyt painikkeen rakenteen perusteella kieliriippuvaisen tekstin sijaan)
+- Control+R: Ei toiminut, kun käyttövinkkien suodatus on pois päältä
+- Control+R: Ei lukenut viestejä, jotka sisältävät linkkejä tai muotoiltua tekstiä
+
 ### Versio 1.8.0 (1.5.2026)
 
 **Lisätty:**

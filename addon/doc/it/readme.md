@@ -87,6 +87,16 @@ Configura i tasti rapidi in:
 
 ## Cronologia delle modifiche
 
+### Versione 1.8.1 (2026-05-06)
+
+**Modificato:**
+- Compatibilità NVDA 2026
+
+**Corretto:**
+- Control+R: Non funzionava per i messaggi con pulsante "leggi di più" (ora trova il pulsante tramite struttura invece di testo dipendente dalla lingua)
+- Control+R: Non funzionava con il filtro suggerimenti d'uso disattivato
+- Control+R: Non leggeva i messaggi con link o testo formattato
+
 ### Versione 1.8.0 (2026-05-01)
 
 **Aggiunto:**

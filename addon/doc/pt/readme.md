@@ -87,6 +87,16 @@ Configure os atalhos em:
 
 ## Registro de Alterações
 
+### Versão 1.8.1 (2026-05-06)
+
+**Alterado:**
+- Compatibilidade com NVDA 2026
+
+**Corrigido:**
+- Control+R: Não funcionava em mensagens com botão "ler mais" (agora encontra o botão pela estrutura em vez do texto dependente do idioma)
+- Control+R: Não funcionava com o filtro de dicas de uso desativado
+- Control+R: Não lia mensagens com links ou texto formatado
+
 ### Versão 1.8.0 (2026-05-01)
 
 **Adicionado:**

@@ -87,6 +87,40 @@ Configure shortcuts in:
 
 ## Changelog
 
+### Version 1.8.1 (2026-05-06)
+
+**Changed:**
+- NVDA 2026 compatibility
+
+**Fixed:**
+- Control+R: Not working for messages with "read more" button (now finds the button by structure instead of language-dependent text)
+- Control+R: Not working when usage hints filter is disabled
+- Control+R: Not reading messages that contain links or formatted text
+
+### Version 1.8.0 (2026-05-01)
+
+**Added:**
+- Donation dialog during add-on installation
+
+**Changed:**
+- Navigation (Alt+1, Alt+2, Alt+D) more resilient to WhatsApp UI changes
+
+**Fixed:**
+- Enter and Shift+Enter not working when usage hints filter is disabled
+- Enter key not working in file dialogs and conversation list
+- Toggle phone filtering in conversation list not updating correctly
+- Improved Finnish translation and documentation
+
+### Version 1.7.1 (2026-04-10)
+
+**Fixed:**
+- Minor bug fixes and stability improvements
+
+### Version 1.7.0 (2026-04-10)
+
+**Added:**
+- Phone number filtering toggle for conversation and message lists
+
 ### Version 1.6.0 (2026-03-23)
 
 **Added:**

@@ -87,6 +87,16 @@ Konfigurieren Sie Tastenkürzel unter:
 
 ## Änderungsprotokoll
 
+### Version 1.8.1 (2026-05-06)
+
+**Geändert:**
+- NVDA 2026 Kompatibilität
+
+**Behoben:**
+- Control+R: Funktionierte nicht bei Nachrichten mit "Weiterlesen"-Schaltfläche (findet die Schaltfläche jetzt über die Struktur statt über sprachabhängigen Text)
+- Control+R: Funktionierte nicht bei deaktiviertem Hinweis-Filter
+- Control+R: Las keine Nachrichten mit Links oder formatiertem Text
+
 ### Version 1.8.0 (2026-05-01)
 
 **Hinzugefügt:**

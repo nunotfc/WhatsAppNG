@@ -88,6 +88,16 @@ Kısayolları şuradan yapılandırın:
 
 ## Değişiklik Günlüğü
 
+### Sürüm 1.8.1 (2026-05-06)
+
+**Değiştirildi:**
+- NVDA 2026 uyumluluğu
+
+**Düzeltildi:**
+- Control+R: "Devamını oku" butonlu mesajlarda çalışmıyordu (artık butonu dile bağlı metin yerine yapıyla buluyor)
+- Control+R: Kullanım ipucu filtresi devre dışıyken çalışmıyordu
+- Control+R: Bağlantı veya biçimlendirilmiş metin içeren mesajları okumuyordu
+
 ### Sürüm 1.8.0 (2026-05-01)
 
 **Eklendi:**

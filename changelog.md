@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.1] - 2026-05-06
+
+### Changed
+- NVDA 2026 compatibility
+
+### Fixed
+- **Control+R**: Not working for messages with "read more" button (now finds the button by structure instead of language-dependent text)
+- **Control+R**: Not working when usage hints filter is disabled
+- **Control+R**: Not reading messages that contain links or formatted text
+
 ## [1.8.0] - 2026-05-01
 
 ### Added
