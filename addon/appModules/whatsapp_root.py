@@ -373,29 +373,25 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:enter"
 	)
 	def script_playAudio(self, gesture):
-		"""Enter: Clicks play button (button before slider) without moving focus."""
+		"""Enter: reproduz áudio/vídeo e deixa os restantes itens para o WhatsApp."""
 		try:
 			focus = api.getFocusObject()
 
 			# Only works in message list
 			if not self._isMessageListFocus():
-				# If focus is on a button outside message list, let it pass through
-				if _role(focus) == controlTypes.Role.BUTTON:
-					gesture.send()
-					return
 				gesture.send()
 				return
 
 			parent = getattr(focus, "parent", None)
 			if not parent:
-				ui.message(_("No audio message found"))
+				gesture.send()
 				return
 
 			# Check if this is a video by looking for duration pattern in message
 			if self._isVideoMessage(parent):
 				# Video: click first button directly
-				self._clickFirstButton(focus)
-				return
+				if self._clickFirstButton(focus):
+					return
 
 			# Audio: search for slider and click button before it
 			siblings = getattr(parent, "children", []) or []
@@ -407,11 +403,11 @@ class AppModule(appModuleHandler.AppModule):
 						all_buttons[-1].doAction()
 						return
 
-			# No slider or button found
-			ui.message(_("No audio message found"))
+			# Sem controlo de reprodução: o Enter pertence ao item focado.
+			gesture.send()
 
 		except Exception:
-			ui.message(_("No audio message found"))
+			gesture.send()
 
 	def _getMessageText(self, require_expanded=True):
 		"""
@@ -979,16 +975,17 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			parent = getattr(focus, "parent", None)
 			if not parent:
-				return
+				return False
 
 			# Search in all children
 			for child in getattr(parent, "children", []):
 				button = self._findFirstButton(child)
 				if button:
 					button.doAction()
-					return
+					return True
 		except Exception:
 			pass
+		return False
 
 
 	@scriptHandler.script(
