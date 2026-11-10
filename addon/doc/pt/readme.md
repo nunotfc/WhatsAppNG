@@ -10,7 +10,8 @@ Complemento NVDA que fornece melhorias de acessibilidade para o WhatsApp Desktop
 - **Enter**: Reproduzir mensagem de voz (funciona em conversas individuais e grupos)
 - **Shift+Enter**: Abrir menu de contexto da mensagem
 - **Control+C**: Copiar mensagem atual para a área de transferência
-- **Control+R**: Ler mensagem completa (clica no botão "ler mais" se necessário)
+- **Control+R**: Ler mensagem completa (expande todas as secções "ler mais" se necessário)
+- **Alt+Enter**: Mostrar a mensagem completa numa janela de navegação (expande primeiro todas as secções "ler mais")
 - **Control+Shift+Enter**: Reagir à mensagem
 
 ### Scripts de Alternância (sem atalho padrão - configure em Gestos de Entrada)
@@ -87,6 +88,12 @@ Configure os atalhos em:
 
 ## Registro de Alterações
 
+### Versão 1.8.2 (2026-11-10)
+
+**Corrigido:**
+- Control+R: Expande todas as secções "ler mais" em mensagens longas e só lê quando o texto está completo.
+- Alt+Enter: Expande todas as secções "ler mais" antes de abrir o texto completo numa janela de navegação.
+
 ### Versão 1.8.1 (2026-05-06)
 
 **Alterado:**
@@ -144,7 +151,7 @@ Configure os atalhos em:
 
 **Adicionado:**
 - Control+Shift+Enter: Reagir a mensagens (abre menu de reações)
-- Alt+Enter: Ler mensagem completa em janela de navegação
+- Alt+Enter: Expandir todas as secções "ler mais" e mostrar a mensagem completa numa janela de navegação
 - Atalhos de teclado nativos do WhatsApp Desktop adicionados à documentação
 
 **Alterado:**

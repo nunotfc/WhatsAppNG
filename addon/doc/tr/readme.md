@@ -10,7 +10,8 @@ Web tabanlı WhatsApp Masaüstü için erişilebilirlik iyileştirmeleri sağlay
 * **Enter**: Sesli mesajı oynat (bireysel sohbetlerde ve gruplarda çalışır)
 * **Shift+Enter**: Mesaj bağlam menüsünü aç
 * **Control+C**: Geçerli mesajı panoya kopyala
-* **Control+R**: Mesajın tamamını oku (gerekirse "devamını oku" düğmesine tıklar)
+* **Control+R**: Mesajın tamamını oku (gerekirse tüm “devamını oku” bölümlerini açar)
+* **Alt+Enter**: Mesajın tamamını tarama modu penceresinde göster (önce tüm “devamını oku” bölümlerini açar)
 * **Control+Shift+Enter**: Mesajı tepki ver
 
 ### Geçiş Komutları (varsayılan kısayol yoktur – Girdi Hareketleri'nden yapılandırılır)
@@ -87,6 +88,12 @@ Kısayolları şuradan yapılandırın:
 **NVDA menüsü → Tercihler → Girdi Hareketleri → WhatsApp NG**
 
 ## Değişiklik Günlüğü
+
+### Sürüm 1.8.2 (2026-11-10)
+
+**Düzeltildi:**
+- Control+R: Uzun mesajlardaki tüm “devamını oku” bölümlerini açar ve yalnızca metin tamamlandığında okur.
+- Alt+Enter: Tam metni tarama modu penceresinde açmadan önce tüm “devamını oku” bölümlerini açar.
 
 ### Sürüm 1.8.1 (2026-05-06)
 

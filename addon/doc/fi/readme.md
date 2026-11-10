@@ -10,7 +10,8 @@ NVDA-lisäosa, joka lisää saavutettavuusparannuksia WhatsAppin verkkopohjaisel
 - **Enter**: Toista ääniviesti (toimii yksityiskeskusteluissa ja ryhmissä)
 - **Vaihto+Enter**: Avaa viestin pikavalikko
 - **Ctrl+C**: Kopioi nykyinen viesti leikepöydälle
-- **Ctrl+R**: Lue koko viesti (painaa tarvittaessa "Lue lisää" -painiketta)
+- **Ctrl+R**: Lue koko viesti (avaa tarvittaessa kaikki ”Lue lisää” -osiot)
+- **Alt+Enter**: Näytä koko viesti selaustilan ikkunassa (avaa ensin kaikki ”Lue lisää” -osiot)
 - **Ctrl+Vaihto+Enter**: Reagoi viestiin
 
 ### Tilanvaihtoskriptit (ei oletusarvoisia pikanäppäimiä – määritä ne Näppäinkomennot-valintaikkunassa)
@@ -86,6 +87,12 @@ Puhelinnumerosuodattimet voidaan ottaa käyttöön tai poistaa käytöstä:
 Määritä pikanäppäimet kohdassa **NVDA-valikko → Mukautukset → Näppäinkomennot → WhatsApp NG**.
 
 ## Muutosloki
+
+### Versio 1.8.2 (10.11.2026)
+
+**Korjattu:**
+- Ctrl+R: Avaa pitkän viestin kaikki ”Lue lisää” -osiot ja lukee viestin vasta, kun koko teksti on käytettävissä.
+- Alt+Enter: Avaa kaikki ”Lue lisää” -osiot ennen koko tekstin näyttämistä selaustilan ikkunassa.
 
 ### Versio 1.8.1 (6.5.2026)
 

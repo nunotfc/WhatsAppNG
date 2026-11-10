@@ -10,7 +10,8 @@ NVDA-Add-on, das Barrierefreiheitsverbesserungen für die webbasierte WhatsApp-D
 - **Enter**: Sprachnachricht abspielen (funktioniert in einzelnen Chats und Gruppen)
 - **Umschalt+Enter**: Kontextmenü für Nachrichten öffnen
 - **Strg+C**: Aktuelle Nachricht in die Zwischenablage kopieren
-- **Strg+R**: Vollständige Nachricht vorlesen (klickt bei Bedarf auf "Mehr lesen"-Schaltfläche)
+- **Strg+R**: Vollständige Nachricht vorlesen (erweitert bei Bedarf alle „Weiterlesen“-Abschnitte)
+- **Alt+Enter**: Vollständige Nachricht in einem Lesefenster anzeigen (erweitert zuvor alle „Weiterlesen“-Abschnitte)
 - **Strg+Umschalt+Enter**: Auf Nachricht reagieren
 
 ### Umschalt-Skripte (keine Standard-Tastenkürzel - in Eingabegesten konfigurieren)
@@ -86,6 +87,12 @@ Konfigurieren Sie Tastenkürzel unter:
 **NVDA-Menü → Einstellungen → Eingabegesten → WhatsApp NG**
 
 ## Änderungsprotokoll
+
+### Version 1.8.2 (2026-11-10)
+
+**Behoben:**
+- Strg+R: Erweitert alle „Weiterlesen“-Abschnitte langer Nachrichten und liest erst vor, wenn der vollständige Text verfügbar ist.
+- Alt+Enter: Erweitert alle „Weiterlesen“-Abschnitte, bevor der vollständige Text in einem Lesefenster geöffnet wird.
 
 ### Version 1.8.1 (2026-05-06)
 

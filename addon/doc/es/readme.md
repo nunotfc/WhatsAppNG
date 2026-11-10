@@ -10,7 +10,8 @@ Complemento para NVDA que proporciona mejoras de accesibilidad para la versión 
 - **Enter**: Reproducir mensaje de voz (funciona en chats individuales y grupos)
 - **Shift+Enter**: Abrir el menú contextual del mensaje
 - **Control+C**: Copiar el mensaje actual al portapapeles
-- **Control+R**: Leer el mensaje completo (hace clic en el botón "leer más" si es necesario)
+- **Control+R**: Leer el mensaje completo (expande todas las secciones «leer más» si es necesario)
+- **Alt+Enter**: Mostrar el mensaje completo en una ventana de modo exploración (expande primero todas las secciones «leer más»)
 - **Control+Shift+Enter**: Reaccionar al mensaje
 
 ### Scripts conmutables (sin atajo predeterminado - configurar en Gestos de entrada)
@@ -86,6 +87,12 @@ Configura los atajos en:
 **Menú NVDA → Preferencias → Gestos de entrada → WhatsApp NG**
 
 ## Historial de cambios
+
+### Versión 1.8.2 (2026-11-10)
+
+**Corregido:**
+- Control+R: Expande todas las secciones «leer más» de los mensajes largos y solo lee cuando el texto está completo.
+- Alt+Enter: Expande todas las secciones «leer más» antes de abrir el texto completo en una ventana de modo exploración.
 
 ### Versión 1.8.1 (2026-05-06)
 

@@ -3,15 +3,12 @@
 # This file is distributed under the same license as the whatsAppNG package.
 # Nuno Costa <nrfcosta21@gmail.com>, 2025.
 #
-#. Brief changelog for this version
-#. Translators: what's new content for the add-on version to be shown in the add-on store
-#: buildVars.py:29
 msgid ""
 msgstr ""
-"Project-Id-Version: whatsAppNG 1.1.1\n"
+"Project-Id-Version: whatsAppNG 1.8.2\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2026-03-19 21:54+0000\n"
-"PO-Revision-Date: 2026-02-14 10:07+0100\n"
+"POT-Creation-Date: 2026-11-10 12:31+0000\n"
+"PO-Revision-Date: 2026-11-10 12:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -21,157 +18,175 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.7\n"
 
-#: addon\appModules\whatsapp_root.py:56
+#: addon\appModules\whatsapp_root.py:60
 msgid "WhatsApp NG"
 msgstr "WhatsApp NG"
 
-#: addon\appModules\whatsapp_root.py:407
+#: addon\appModules\whatsapp_root.py:363
 msgid "Copy current message to clipboard"
 msgstr "Aktuelle Nachricht in die Zwischenablage kopieren"
 
-#: addon\appModules\whatsapp_root.py:429 addon\appModules\whatsapp_root.py:444
+#: addon\appModules\whatsapp_root.py:385 addon\appModules\whatsapp_root.py:400
 msgid "Copied"
 msgstr "Kopiert"
 
 #. Not a message or couldn't copy
-#: addon\appModules\whatsapp_root.py:448
+#: addon\appModules\whatsapp_root.py:404
 msgid "Cannot copy"
 msgstr "Kann nicht kopiert werden"
 
-#: addon\appModules\whatsapp_root.py:452
+#: addon\appModules\whatsapp_root.py:408
 msgid "Play voice message"
 msgstr "Sprachnachricht abspielen"
 
-#. No slider or button found
-#: addon\appModules\whatsapp_root.py:466 addon\appModules\whatsapp_root.py:486
-#: addon\appModules\whatsapp_root.py:489
-msgid "No audio message found"
-msgstr "Keine Sprachnachricht gefunden"
-
-#: addon\appModules\whatsapp_root.py:499
+#: addon\appModules\whatsapp_root.py:456
 msgid "Not in message list"
 msgstr "Nicht in Nachrichtenliste"
 
-#: addon\appModules\whatsapp_root.py:505 addon\appModules\whatsapp_root.py:585
+#: addon\appModules\whatsapp_root.py:462 addon\appModules\whatsapp_root.py:604
 msgid "Not a text message"
 msgstr "Keine Textnachricht"
 
-#: addon\appModules\whatsapp_root.py:509 addon\appModules\whatsapp_root.py:591
+#: addon\appModules\whatsapp_root.py:466 addon\appModules\whatsapp_root.py:610
 msgid "No message found"
 msgstr "Keine Nachricht gefunden"
 
-#: addon\appModules\whatsapp_root.py:565 addon\appModules\whatsapp_root.py:567
-#: addon\appModules\whatsapp_root.py:647 addon\appModules\whatsapp_root.py:652
+#: addon\appModules\whatsapp_root.py:522 addon\appModules\whatsapp_root.py:524
+#: addon\appModules\whatsapp_root.py:613
 msgid "Text not found"
 msgstr "Text nicht gefunden"
 
-#. Translators: Read complete message (click "read more" and speak text)
-#: addon\appModules\whatsapp_root.py:571
-msgid "Read complete message (clicks 'read more' button)"
-msgstr ""
-"Vollständige Nachricht lesen (klickt auf die Schaltfläche „Mehr lesen“)"
+#. Translators: Read a long message after expanding all truncated sections.
+#: addon\appModules\whatsapp_root.py:592
+msgid "Read complete message (expands all 'read more' sections)"
+msgstr "Vollständige Nachricht lesen (erweitert alle „Weiterlesen“-Abschnitte)"
 
-#: addon\appModules\whatsapp_root.py:655
+#: addon\appModules\whatsapp_root.py:616
 msgid "Read complete message in browse mode"
 msgstr "Vollständige Nachricht im Browsermodus lesen"
 
-#: addon\appModules\whatsapp_root.py:707
+#: addon\appModules\whatsapp_root.py:655
 msgid "Open context menu"
 msgstr "Kontextmenü öffnen"
 
-#: addon\appModules\whatsapp_root.py:721 addon\appModules\whatsapp_root.py:743
-#: addon\appModules\whatsapp_root.py:746
+#: addon\appModules\whatsapp_root.py:669 addon\appModules\whatsapp_root.py:691
+#: addon\appModules\whatsapp_root.py:694
 msgid "No menu found"
 msgstr "Kein Menü gefunden"
 
-#: addon\appModules\whatsapp_root.py:749
+#: addon\appModules\whatsapp_root.py:697
 msgid "React to message"
 msgstr "Auf Nachricht reagieren"
 
-#: addon\appModules\whatsapp_root.py:785
+#: addon\appModules\whatsapp_root.py:733
 msgid "Focus message composer"
 msgstr "Verfasser von Fokusnachrichten"
 
-#: addon\appModules\whatsapp_root.py:797 addon\appModules\whatsapp_root.py:857
-#: addon\appModules\whatsapp_root.py:859
+#: addon\appModules\whatsapp_root.py:743 addon\appModules\whatsapp_root.py:762
+#: addon\appModules\whatsapp_root.py:764
 msgid "Message composer not found"
 msgstr "Nachrichtenverfasser nicht gefunden"
 
-#: addon\appModules\whatsapp_root.py:1096
+#: addon\appModules\whatsapp_root.py:1007
 msgid "Go to WhatsApp conversation list"
 msgstr "Zur WhatsApp-Konversationsliste gehen"
 
-#: addon\appModules\whatsapp_root.py:1130
-#: addon\appModules\whatsapp_root.py:1173
-#: addon\appModules\whatsapp_root.py:1176
+#: addon\appModules\whatsapp_root.py:1029
+#: addon\appModules\whatsapp_root.py:1055
+#: addon\appModules\whatsapp_root.py:1058
 msgid "Conversation list not found"
 msgstr "Konversationsliste nicht gefunden"
 
-#: addon\appModules\whatsapp_root.py:1189
+#: addon\appModules\whatsapp_root.py:1063
 msgid "Go to WhatsApp message list"
 msgstr "Zur WhatsApp-Nachrichtenliste gehen"
 
-#: addon\appModules\whatsapp_root.py:1201
-#: addon\appModules\whatsapp_root.py:1263
-#: addon\appModules\whatsapp_root.py:1266
+#: addon\appModules\whatsapp_root.py:1073
+#: addon\appModules\whatsapp_root.py:1119
+#: addon\appModules\whatsapp_root.py:1122
 msgid "Message list not found"
 msgstr "Nachrichtenliste nicht gefunden"
 
-#: addon\appModules\whatsapp_root.py:1279
+#: addon\appModules\whatsapp_root.py:1128
 msgid "Toggle phone number filtering in conversation list"
 msgstr "Schalten Sie die Telefonnummernfilterung in der Konversationsliste um"
 
-#: addon\appModules\whatsapp_root.py:1285
+#: addon\appModules\whatsapp_root.py:1134
 msgid "Use this command in the conversation list"
 msgstr "Verwenden Sie diesen Befehl in der Konversationsliste"
 
-#: addon\appModules\whatsapp_root.py:1294
+#: addon\appModules\whatsapp_root.py:1144
 msgid "Conversation list: phone numbers hidden"
 msgstr "Konversationsliste: Telefonnummern ausgeblendet"
 
-#: addon\appModules\whatsapp_root.py:1296
+#: addon\appModules\whatsapp_root.py:1146
 msgid "Conversation list: phone numbers visible"
 msgstr "Konversationsliste: Telefonnummern sichtbar"
 
-#: addon\appModules\whatsapp_root.py:1301
+#: addon\appModules\whatsapp_root.py:1151
 msgid "Toggle phone number filtering in message list"
 msgstr "Schalten Sie die Telefonnummernfilterung in der Nachrichtenliste um"
 
-#: addon\appModules\whatsapp_root.py:1307
+#: addon\appModules\whatsapp_root.py:1157
 msgid "Use this command in the message list"
 msgstr "Verwenden Sie diesen Befehl in der Nachrichtenliste"
 
-#: addon\appModules\whatsapp_root.py:1317
+#: addon\appModules\whatsapp_root.py:1167
 msgid "Message list: phone numbers hidden"
 msgstr "Nachrichtenliste: Telefonnummern ausgeblendet"
 
-#: addon\appModules\whatsapp_root.py:1319
+#: addon\appModules\whatsapp_root.py:1169
 msgid "Message list: phone numbers visible"
 msgstr "Nachrichtenliste: Telefonnummern sichtbar"
 
-#: addon\appModules\whatsapp_root.py:1324
+#: addon\appModules\whatsapp_root.py:1174
 msgid "Toggle usage hints filtering"
 msgstr "Nutzungshinweise filtern umschalten"
 
-#: addon\appModules\whatsapp_root.py:1336
+#: addon\appModules\whatsapp_root.py:1186
 msgid "Usage hints: hidden"
 msgstr "Nutzungshinweise: versteckt"
 
-#: addon\appModules\whatsapp_root.py:1338
+#: addon\appModules\whatsapp_root.py:1188
 msgid "Usage hints: visible"
 msgstr "Nutzungshinweise: sichtbar"
 
-#: addon\appModules\whatsapp_root.py:1348
+#: addon\appModules\whatsapp_root.py:1198
 msgid "Toggle automatic Focus Mode"
 msgstr "Schalten Sie den automatischen Fokusmodus um"
 
-#: addon\appModules\whatsapp_root.py:1359
+#: addon\appModules\whatsapp_root.py:1209
 msgid "Auto Focus Mode: enabled"
 msgstr "Autofokus-Modus: aktiviert"
 
-#: addon\appModules\whatsapp_root.py:1361
+#: addon\appModules\whatsapp_root.py:1211
 msgid "Auto Focus Mode: disabled"
 msgstr "Autofokus-Modus: deaktiviert"
+
+#: addon\installTasks.py:10
+msgid "Donate via PayPal"
+msgstr "Per PayPal spenden"
+
+#: addon\installTasks.py:25
+msgid "&Not now"
+msgstr "&Nicht jetzt"
+
+#: addon\installTasks.py:36
+#, python-format
+msgid "Request for contributions to %s"
+msgstr "Aufruf zu Beiträgen für %s"
+
+#: addon\installTasks.py:37
+msgid ""
+"Developing add-ons requires a lot of time and effort.\n"
+"Your contribution helps maintain this and other free projects.\n"
+"Would you like to contribute? Select a payment method below.\n"
+"Thank you for your support!"
+msgstr ""
+"Die Entwicklung von Add-ons erfordert viel Zeit und Mühe.\n"
+"Ihr Beitrag hilft, dieses und andere kostenlose Projekte zu erhalten.\n"
+"Möchten Sie einen Beitrag leisten? Wählen Sie unten eine Zahlungsmethode.\n"
+"Vielen Dank für Ihre Unterstützung!"
 
 #. Add-on summary/title, usually the user visible name of the add-on
 #. Translators: Summary/title for this add-on
@@ -193,6 +208,25 @@ msgstr ""
 "Nachrichteninteraktion und besserer Unterstützung für "
 "Bildschirmleseprogramme."
 
+#. Brief changelog for this version
+#. Translators: what's new content for the add-on version to be shown in the add-on store
+#: buildVars.py:29
+msgid ""
+"Fixed:\n"
+"- Control+R: Expands all \"read more\" sections in long messages and speaks "
+"only when the text is complete.\n"
+"- Alt+Enter: Expands all \"read more\" sections before opening the complete "
+"text in a browse mode window.\n"
+msgstr ""
+"Behoben:\n"
+"- Strg+R: Erweitert alle „Weiterlesen“-Abschnitte langer Nachrichten und "
+"liest erst vor, wenn der vollständige Text verfügbar ist.\n"
+"- Alt+Enter: Erweitert alle „Weiterlesen“-Abschnitte, bevor der vollständige "
+"Text in einem Lesefenster geöffnet wird.\n"
+
+#~ msgid "No audio message found"
+#~ msgstr "Keine Sprachnachricht gefunden"
+
 #~ msgid ""
 #~ "- Fixed Control+R to work only on text messages.\n"
 #~ "- Turkish translation support.\n"
@@ -207,27 +241,3 @@ msgstr ""
 #~ "- Verbesserte Navigationsleistung.\n"
 #~ "- Videowiedergabe mit der Eingabetaste.\n"
 #~ "- Die Escape-Taste wird jetzt korrekt durchgereicht."
-
-#: addon\installTasks.py
-msgid "Donate via PayPal"
-msgstr "Per PayPal spenden"
-
-#: addon\installTasks.py
-msgid "&Not now"
-msgstr "&Nicht jetzt"
-
-#: addon\installTasks.py
-msgid "Request for contributions to %s"
-msgstr "Aufruf zu Beiträgen für %s"
-
-#: addon\installTasks.py
-msgid ""
-"Developing add-ons requires a lot of time and effort.\n"
-"Your contribution helps maintain this and other free projects.\n"
-"Would you like to contribute? Select a payment method below.\n"
-"Thank you for your support!"
-msgstr ""
-"Die Entwicklung von Add-ons erfordert viel Zeit und Mühe.\n"
-"Ihr Beitrag hilft, dieses und andere kostenlose Projekte zu erhalten.\n"
-"Möchten Sie einen Beitrag leisten? Wählen Sie unten eine Zahlungsmethode.\n"
-"Vielen Dank für Ihre Unterstützung!"

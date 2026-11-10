@@ -36,6 +36,10 @@ PHONE_RE = re.compile(r"\+\d[()\d\s-]{8,15}(?=[^\d]|$|\s)")
 
 # Video duration pattern: detect "3:41", "0:45", etc.
 DURATION_RE = re.compile(r"\b\d+:\d{2}\b")  # Time pattern like "3:41"
+MAX_READ_MORE_CLICKS = 20
+READ_MORE_WAIT_MS = 150
+MAX_READ_MORE_WAITS = 3
+READ_MORE_SPEECH_TIMEOUT_MS = 5000
 
 # Usage hints pattern: detect "For more options..." in multiple languages
 USAGE_HINT_RE = re.compile(
@@ -280,6 +284,38 @@ class AppModule(appModuleHandler.AppModule):
 			pass
 		return texts
 
+	def _findReadMoreLink(self, obj, clicked_links=None):
+		"""Encontra o link a seguir ao marcador de truncagem, sem depender do idioma."""
+		if clicked_links is None:
+			clicked_links = []
+		try:
+			children = getattr(obj, "children", []) or []
+			found_ellipsis = False
+			for child in children:
+				role = _role(child)
+				name = (getattr(child, "name", "") or "").strip()
+				if role == 7 and name == "…":
+					found_ellipsis = True
+					continue
+				if found_ellipsis and role == 9 and not any(child is link for link in clicked_links):
+					return child
+				if name:
+					found_ellipsis = False
+			for child in children:
+				result = self._findReadMoreLink(child, clicked_links)
+				if result:
+					return result
+		except Exception:
+			pass
+		return None
+
+	def _getVisibleMessageParts(self, parent):
+		"""Recolhe o texto visível após cada expansão."""
+		parts = []
+		for sibling in getattr(parent, "children", []) or []:
+			parts.extend(self._collectTexts(sibling, 10))
+		return [part for part in parts if part.strip() != "…"]
+
 	def _findCollapsed(self, obj):
 		"""Find button with COLLAPSED state (512) recursively."""
 		try:
@@ -487,21 +523,83 @@ class AppModule(appModuleHandler.AppModule):
 
 		return None, _("Text not found")
 
+	def _expandCompleteMessage(self, parent, on_complete):
+		"""Expande todos os links de continuação antes de apresentar o texto."""
+		if getattr(self, "_readMoreInProgress", False):
+			return
+
+		previous_speech_mode = speech.getState().speechMode
+		self._readMoreInProgress = True
+		speech.cancelSpeech()
+		speech.setSpeechMode(speech.SpeechMode.off)
+
+		def restore_speech():
+			if not self._readMoreInProgress:
+				return
+			self._readMoreInProgress = False
+			speech.cancelSpeech()
+			if speech.getState().speechMode == speech.SpeechMode.off:
+				speech.setSpeechMode(previous_speech_mode)
+
+		def finish(parts):
+			if not self._readMoreInProgress:
+				return
+			restore_speech()
+			on_complete("\r\n".join(parts))
+
+		clicked_links = []
+
+		def expand(clicks=0, previous_parts=None, waits=0):
+			parts = []
+			try:
+				parts = self._getVisibleMessageParts(parent)
+				if previous_parts is not None and parts == previous_parts:
+					# Dar tempo à árvore de acessibilidade para atualizar após o clique.
+					if waits < MAX_READ_MORE_WAITS:
+						wx.CallLater(READ_MORE_WAIT_MS, expand, clicks, previous_parts, waits + 1)
+						return
+					finish(parts)
+					return
+
+				read_more = None
+				for sibling in getattr(parent, "children", []) or []:
+					read_more = self._findReadMoreLink(sibling, clicked_links)
+					if read_more:
+						break
+				if not read_more:
+					# O WhatsApp pode reutilizar o mesmo link em cada expansão.
+					for sibling in getattr(parent, "children", []) or []:
+						read_more = self._findReadMoreLink(sibling)
+						if read_more:
+							break
+
+				if not read_more or clicks >= MAX_READ_MORE_CLICKS:
+					finish(parts)
+					return
+
+				read_more.doAction()
+				clicked_links.append(read_more)
+				wx.CallLater(READ_MORE_WAIT_MS, expand, clicks + 1, parts)
+			except Exception:
+				finish(parts)
+
+		# Proteção caso uma atualização do WhatsApp impeça o callback de terminar.
+		wx.CallLater(READ_MORE_SPEECH_TIMEOUT_MS, restore_speech)
+		expand()
+
 	@scriptHandler.script(
-		# Translators: Read complete message (click "read more" and speak text)
-		description=_("Read complete message (clicks 'read more' button)"),
+		# Translators: Read a long message after expanding all truncated sections.
+		description=_("Read complete message (expands all 'read more' sections)"),
 		gesture="kb:control+r"
 	)
 	def script_readCompleteMessage(self, gesture):
-		"""Control+R: Reads complete message (clicks 'read more' if needed)."""
-		# Validation
+		"""Control+R: Expande todos os blocos da mensagem e lê o texto."""
 		if not self._isMessageListFocus():
 			gesture.send()
 			return
 
 		focus = api.getFocusObject()
 		focus_name = getattr(focus, "name", "") or ""
-
 		if "…" not in focus_name:
 			ui.message(_("Not a text message"))
 			gesture.send()
@@ -512,77 +610,7 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(_("No message found"))
 			return
 
-		siblings = getattr(parent, "children", []) or []
-
-		# Try to find and click "read more" link first
-		def findReadMore(obj):
-			"""Find LINK (R:9) that appears after the … truncation marker."""
-			try:
-				children = getattr(obj, "children", []) or []
-				found_ellipsis = False
-				for child in children:
-					role = _role(child)
-					name = (getattr(child, "name", "") or "").strip()
-					# Track when we see the … truncation
-					if role == 7 and name == "…":
-						found_ellipsis = True
-						continue
-					# The R:9 LINK after … is the read more button
-					if found_ellipsis and role == 9:
-						return child
-					if name:
-						found_ellipsis = False
-				# Recurse into children
-				for child in children:
-					result = findReadMore(child)
-					if result:
-						return result
-			except Exception:
-				pass
-			return None
-
-		read_more_found = None
-		for sibling in siblings:
-			read_more_found = findReadMore(sibling)
-			if read_more_found:
-				break
-
-		if read_more_found:
-			read_more_found.doAction()
-			message_parent = parent
-
-			def speak_after_click():
-				speech.cancelSpeech()
-				text_parts = []
-				try:
-					updated_siblings = getattr(message_parent, "children", []) or []
-					for sib in updated_siblings:
-						text_parts.extend(self._collectTexts(sib, 10))
-				except Exception:
-					pass
-
-				expanded = [t for t in text_parts if "…" not in t]
-				full_text = "\r\n".join(expanded)
-
-				if full_text:
-					ui.message(full_text)
-				else:
-					ui.message(_("Text not found"))
-
-			wx.CallLater(150, speak_after_click)
-			return
-
-		# No "read more" button - just read expanded text
-		all_text_parts = []
-		for sibling in siblings:
-			all_text_parts.extend(self._collectTexts(sibling, 10))
-
-		expanded_parts = [t for t in all_text_parts if "…" not in t]
-		if expanded_parts:
-			ui.message("\r\n".join(expanded_parts))
-			return
-
-		ui.message(_("Text not found"))
+		self._expandCompleteMessage(parent, lambda text: ui.message(text or _("Text not found")))
 
 	@scriptHandler.script(
 		description=_("Read complete message in browse mode"),
@@ -602,39 +630,26 @@ class AppModule(appModuleHandler.AppModule):
 			gesture.send()
 			return
 
-		# Try to get expanded text first (if there's "read more")
-		text, error = self._getMessageText(require_expanded=True)
+		parent = getattr(focus, "parent", None)
+		if not parent:
+			gesture.send()
+			return
 
-		if not error and text:
-			# Successfully got expanded text
-			ui.browseableMessage(text)
-		else:
-			# Fallback: show current message text (even if short or no "read more")
-			parent = getattr(focus, "parent", None)
-			if parent:
-				siblings = getattr(parent, "children", []) or []
-				all_text_parts = []
-				for sibling in siblings:
-					all_text_parts.extend(self._collectTexts(sibling, 20))
-
-				existing_text = " ".join(all_text_parts)
-
-				if existing_text.strip():
-					ui.browseableMessage(existing_text)
-				else:
-					# Last resort: use obj.name with filters (same as Ctrl+C)
-					text = focus_name.strip()
-					text = re.sub(r'\s*secção$', '', text, flags=re.IGNORECASE)
-					text = re.sub(r'\s*list\s*item$', '', text, flags=re.IGNORECASE)
-					text = re.sub(r'\s*\d+\s*de\s*\d+$', '', text)
-					text = re.sub(r'\s*$', '', text)
-
-					if text.strip():
-						ui.browseableMessage(text)
-					else:
-						gesture.send()
+		def show_in_browse_mode(text):
+			if text:
+				ui.browseableMessage(text)
+				return
+			# Último recurso para mensagens sem texto acessível nos elementos filhos.
+			fallback = focus_name.strip()
+			fallback = re.sub(r'\s*secção$', '', fallback, flags=re.IGNORECASE)
+			fallback = re.sub(r'\s*list\s*item$', '', fallback, flags=re.IGNORECASE)
+			fallback = re.sub(r'\s*\d+\s*de\s*\d+$', '', fallback)
+			if fallback:
+				ui.browseableMessage(fallback)
 			else:
 				gesture.send()
+
+		self._expandCompleteMessage(parent, show_in_browse_mode)
 
 	@scriptHandler.script(
 		description=_("Open context menu"),

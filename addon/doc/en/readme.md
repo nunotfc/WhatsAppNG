@@ -10,7 +10,8 @@ NVDA add-on that provides accessibility enhancements for the web-based WhatsApp 
 - **Enter**: Play voice message (works in individual chats and groups)
 - **Shift+Enter**: Open message context menu
 - **Control+C**: Copy current message to clipboard
-- **Control+R**: Read complete message (clicks "read more" button if needed)
+- **Control+R**: Read complete message (expands every "read more" section if needed)
+- **Alt+Enter**: Show the complete message in a browse mode window (expands every "read more" section first)
 - **Control+Shift+Enter**: React to message
 
 ### Toggle Scripts (no default shortcut - configure in Input Gestures)
@@ -87,6 +88,12 @@ Configure shortcuts in:
 
 ## Changelog
 
+### Version 1.8.2 (2026-11-10)
+
+**Fixed:**
+- Control+R: Expands every "read more" section in long messages and speaks only when the complete text is ready.
+- Alt+Enter: Expands every "read more" section before opening the complete text in a browse mode window.
+
 ### Version 1.8.1 (2026-05-06)
 
 **Changed:**
@@ -137,7 +144,7 @@ Configure shortcuts in:
 
 **Added:**
 - Control+Shift+Enter: React to messages (opens reaction menu)
-- Alt+Enter: Read complete message in browse mode window
+- Alt+Enter: Expand all "read more" sections and show the complete message in a browse mode window
 - Native WhatsApp Desktop keyboard shortcuts added to documentation
 
 **Changed:**

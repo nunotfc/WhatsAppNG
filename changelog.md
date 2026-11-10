@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.2] - 2026-11-10
+
+### Fixed
+- **Control+R**: Expand all "read more" sections of a long message and speak only after expansion finishes.
+- **Alt+Enter**: Use the same expansion before opening the message in a browse mode window.
+
 ## [1.8.1] - 2026-05-06
 
 ### Changed

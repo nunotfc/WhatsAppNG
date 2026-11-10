@@ -10,7 +10,8 @@ Componente aggiuntivo per NVDA che fornisce migliorie di accessibilità per What
 - **Enter**: Riproduci i messaggi vocali (funziona nelle chat individuali e di gruppo)
 - **Shift+Enter**: Apri il menu contestuale del messaggio
 - **Control+C**: Copia il messaggio attuale negli appunti
-- **Control+R**: Leggi il messaggio completo (clicca il pulsante "Leggi di più" se necessario)
+- **Control+R**: Leggi il messaggio completo (espande tutte le sezioni «Leggi di più» se necessario)
+- **Alt+Enter**: Mostra il messaggio completo in una finestra di navigazione (espande prima tutte le sezioni «Leggi di più»)
 - **Control+Shift+Enter**: Reagire al messaggio
 
 ### Scripts da attivare o disattivare (nessun tasto predefinito, configurare in "Gesti e tasti di immissione")
@@ -86,6 +87,12 @@ Configura i tasti rapidi in:
 **Menu di NVDA → Preferenze → Gesti e tasti di immissione → WhatsApp NG**
 
 ## Cronologia delle modifiche
+
+### Versione 1.8.2 (2026-11-10)
+
+**Corretto:**
+- Control+R: Espande tutte le sezioni «Leggi di più» dei messaggi lunghi e legge solo quando il testo è completo.
+- Alt+Enter: Espande tutte le sezioni «Leggi di più» prima di aprire il testo completo in una finestra di navigazione.
 
 ### Versione 1.8.1 (2026-05-06)
 

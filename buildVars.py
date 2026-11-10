@@ -23,16 +23,12 @@ addon_info = AddonInfo(
 	# Translators: Long description to be shown for this add-on on add-on information from add-on store
 	addon_description=_("Provides accessibility improvements for the web-based WhatsApp Desktop, including navigation shortcuts, message interaction enhancements, and better screen reader support."),
 	# version
-	addon_version="1.8.1",
+	addon_version="1.8.2",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""Changed:
-- NVDA 2026 compatibility
-
-Fixed:
-- Control+R: Not working for messages with "read more" button (now finds the button by structure instead of language-dependent text)
-- Control+R: Not working when usage hints filter is disabled
-- Control+R: Not reading messages that contain links or formatted text
+	addon_changelog=_("""Fixed:
+- Control+R: Expands all "read more" sections in long messages and speaks only when the text is complete.
+- Alt+Enter: Expands all "read more" sections before opening the complete text in a browse mode window.
 """),
 	# Author(s)
 	addon_author="Nuno Costa <nrfcosta21@gmail.com>",
@@ -64,7 +60,7 @@ pythonSources = [
 ]
 
 # Files that contain strings for translation. Usually your python sources
-i18nSources: list[str] = pythonSources + ["buildVars.py"]
+i18nSources: list[str] = pythonSources + ["addon/installTasks.py", "buildVars.py"]
 
 # Files that will be ignored when building the nvda-addon file
 # Paths are relative to the addon directory, not to the root directory of your addon sources.
